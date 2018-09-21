@@ -16,6 +16,16 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
+    <!-- JCC: New Properties -->
+    <springframework.version>5.0.9.RELEASE</springframework.version>
+	<hibernate.version>5.3.6.Final</hibernate.version>
+	<mysql.connector.version>5.1.47</mysql.connector.version>
+	<c3po.version>0.9.5.2</c3po.version>
+	<jackson-databind.version>2.9.7</jackson-databind.version>
+	<modelmapper.version>2.3.0</modelmapper.version>
+	<springsecurity.version>5.0.8.RELEASE</springsecurity.version>
+	<jasperreports.version>6.7.0</jasperreports.version>
+	<!-- JCC-END: New Properties -->
   </properties>
   
   <dependencyManagement>
@@ -44,34 +54,120 @@
       <version>2.3.1</version>
       <scope>provided</scope>
     </dependency>
+    <!-- JCC Not required 
     <dependency>
       <groupId>jstl</groupId>
       <artifactId>jstl</artifactId>
       <version>1.2</version>
     </dependency>
-
+	 -->
     <dependency>
-<groupId>com.google.appengine</groupId>
-<artifactId>appengine-api-1.0-sdk</artifactId>
-<version>1.9.64</version>
-</dependency>
-<dependency>
-<groupId>com.googlecode.objectify</groupId>
-<artifactId>objectify</artifactId>
-<version>5.1.22</version>
-</dependency>
-<dependency>
-<groupId>com.google.endpoints</groupId>
-<artifactId>endpoints-framework</artifactId>
-<version>2.1.2</version>
-</dependency>
-<!-- Test Dependencies -->
+		<groupId>com.google.appengine</groupId>
+		<artifactId>appengine-api-1.0-sdk</artifactId>
+		<version>1.9.64</version>
+	</dependency>
+	<dependency>
+		<groupId>com.googlecode.objectify</groupId>
+		<artifactId>objectify</artifactId>
+		<version>5.1.22</version>
+	</dependency>
+	<dependency>
+		<groupId>com.google.endpoints</groupId>
+		<artifactId>endpoints-framework</artifactId>
+		<version>2.1.2</version>
+	</dependency>
+	<!-- Test Dependencies -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.12</version>
       <scope>test</scope>
     </dependency>
+    
+    <!--JCC: Spring -->
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-webmvc</artifactId>
+        <version>${springframework.version}</version>
+    </dependency>
+
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-tx</artifactId>
+        <version>${springframework.version}</version>
+    </dependency>
+    
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-orm</artifactId>
+        <version>${springframework.version}</version>
+    </dependency>
+    <!--JCC-END: Spring -->
+   
+    <!--JCC: Jackson for JSON converters -->
+    <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>${jackson-databind.version}</version>
+    </dependency>
+    <!--JCC-END: Jackson for JSON converters -->
+    
+        
+    <!-- JCC: Other Dependencies -->
+    <!-- Hibernate -->
+    <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-core</artifactId>
+        <version>${hibernate.version}</version>
+    </dependency>
+
+    <!-- MySQL -->
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>${mysql.connector.version}</version>
+    </dependency>
+    <dependency>
+	  <groupId>com.google.cloud.sql</groupId>
+	  <artifactId>mysql-socket-factory</artifactId>
+	  <version>1.0.10</version>
+	</dependency>
+
+    <!-- C3PO -->
+    <dependency>
+        <groupId>com.mchange</groupId>
+        <artifactId>c3p0</artifactId>
+        <version>${c3po.version}</version>
+    </dependency>
+    
+     <!-- DTO to Entity to DTO (Model Mapper) -->
+    <dependency>
+	  <groupId>org.modelmapper</groupId>
+	  <artifactId>modelmapper</artifactId>
+	  <version>${modelmapper.version}</version>
+	</dependency>
+	
+	<!-- Spring Security -->
+  	<!-- spring-security-web and spring-security-config -->
+  	<dependency>
+    	<groupId>org.springframework.security</groupId>
+    	<artifactId>spring-security-web</artifactId>
+    	<version>${springsecurity.version}</version>
+	</dependency>
+	<dependency>
+    	<groupId>org.springframework.security</groupId>
+    	<artifactId>spring-security-config</artifactId>
+    	<version>${springsecurity.version}</version>
+	</dependency>
+	<!--  Jasper Reports -->
+	<dependency>
+	  <groupId>net.sf.jasperreports</groupId>
+	  <artifactId>jasperreports</artifactId>
+	  <version>${jasperreports.version}</version>
+	</dependency>
+	
+    <!-- JCC-FIN: Other Dependencies -->
+    
   </dependencies>
 
   <build>
@@ -98,6 +194,13 @@
         <artifactId>appengine-maven-plugin</artifactId>
         <version>${appengine.maven.plugin.version}</version>
       </plugin>
+      <!-- JCC: To prevent this issue "web.xml is missing ... -->
+      <plugin>
+         <groupId>org.apache.maven.plugins</groupId>
+         <artifactId>maven-war-plugin</artifactId>
+         <version>3.2.0</version>
+     </plugin>
+     <!-- JCC - FIN: -->
     </plugins>
   </build>
 </project>
