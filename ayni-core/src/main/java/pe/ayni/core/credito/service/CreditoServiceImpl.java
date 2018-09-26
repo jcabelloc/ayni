@@ -289,4 +289,28 @@ public class CreditoServiceImpl implements CreditoService {
 		detalleCreditoService.amortizarDetallesCredito(idCuenta, nroCondicion, monto);
 	}
 
+	@Override
+	@Transactional
+	public List<CreditoDto> findCreditosBy(String by, String input) {
+		List<CreditoDto> creditos = new ArrayList<>();
+		List<ClienteDto> clientes = clienteService.findClientesBy(by, input);
+		if (clientes != null && clientes.size() > 0) {
+			creditos = findCreditosByIdCliente(clientes.get(0).getId());
+		}
+		return creditos;
+	}
+	
+	@Override
+	@Transactional
+	public List<CreditoDto> findCreditosByIdCliente(Integer id) {
+		List<CreditoDto> creditosDto = new ArrayList<>();
+		List<CuentaCredito> creditos = creditoDao.findByIdCliente(id);
+		
+		for(CuentaCredito credito: creditos) {
+			CreditoDto creditoDto = buildDtoFrom(credito);
+			creditosDto.add(creditoDto);
+		}
+		return creditosDto;
+	}
+
 }

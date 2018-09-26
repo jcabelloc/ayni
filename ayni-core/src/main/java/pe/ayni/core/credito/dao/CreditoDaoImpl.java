@@ -1,5 +1,7 @@
 package pe.ayni.core.credito.dao;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,17 @@ public class CreditoDaoImpl implements CreditoDao {
 		
 		Session session = sessionFactory.getCurrentSession();
 		return session.get(CuentaCredito.class, idCuenta);
+	}
+
+	@Override
+	public List<CuentaCredito> findByIdCliente(Integer id) {
+		Session session = sessionFactory.getCurrentSession();
+		String query = "SELECT a FROM CuentaCredito a "
+				+ " WHERE a.cliente.id = :id";
+		
+		return session.createQuery(query, CuentaCredito.class)
+				.setParameter("id", id)
+				.getResultList();
 	}
 
 }

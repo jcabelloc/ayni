@@ -23,4 +23,9 @@ public interface CreditoService {
 
 	void amortizarCredito(Integer idCuenta, BigDecimal monto);
 
+	List<CreditoDto> findCreditosBy(String by, String input);
+	
+	List<CreditoDto> findCreditosByIdCliente(Integer id);
+
+
 }

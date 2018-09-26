@@ -33,7 +33,6 @@ public class CreditoRest {
 	@CrossOrigin
 	@GetMapping("/{idCuenta}")
 	public CreditoDto findCreditoById(@PathVariable Integer idCuenta) {
-		System.out.println(idCuenta);
 		return creditoService.findCreditoById(idCuenta);
 	}
 	
@@ -41,9 +40,12 @@ public class CreditoRest {
 	@GetMapping(path="/{idCuenta}/cuotas-credito", params="estado")
 	public List<CuotaCreditoDto> findCuotasByIdCuentaAndEstado(@PathVariable Integer idCuenta, 
 			@RequestParam("estado") String estado) {
-		System.out.println(idCuenta);
-		System.out.println(estado);
 		return creditoService.findCuotasByIdCuentaAndEstado(idCuenta, estado);
 	}
 	
+	@CrossOrigin
+	@GetMapping(path="", params= {"by", "input"})
+	public List<CreditoDto> findCreditosByDniCliente(@RequestParam("by") String by, @RequestParam("input") String input) {
+		return creditoService.findCreditosBy(by, input);
+	}
 }
