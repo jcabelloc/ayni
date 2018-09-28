@@ -29,9 +29,11 @@ public class ClienteServiceImpl implements ClienteService {
 	@Override
 	@Transactional
 	public void createCliente(ClienteDto clienteDto) {
-		
-		personaNaturalService.createPersonaNatural(clienteDto.getPersonaNatural());
-		
+		if (clienteDto.getPersonaNatural().getId() != null) {
+			personaNaturalService.updatePersonaNatural(clienteDto.getPersonaNatural());
+		} else {
+			personaNaturalService.createPersonaNatural(clienteDto.getPersonaNatural());
+		}
 		PersonaNatural personaNatural = new PersonaNatural();
 		personaNatural.setId(clienteDto.getPersonaNatural().getId());
 		Cliente cliente = new Cliente();
