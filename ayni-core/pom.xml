@@ -25,6 +25,8 @@
 	<modelmapper.version>2.3.0</modelmapper.version>
 	<springsecurity.version>5.0.8.RELEASE</springsecurity.version>
 	<jasperreports.version>6.7.0</jasperreports.version>
+	<googleapi.version>1.25.0</googleapi.version>
+	<googleapisheets.version>v4-rev546-1.25.0</googleapisheets.version> 
 	<!-- JCC-END: New Properties -->
   </properties>
   
@@ -167,6 +169,17 @@
 	</dependency>
 	
     <!-- JCC-FIN: Other Dependencies -->
+    
+    <dependency>
+	  <groupId>com.google.api-client</groupId>
+	  <artifactId>google-api-client</artifactId>
+	  <version>${googleapi.version}</version>
+	</dependency>
+	<dependency>
+	  <groupId>com.google.apis</groupId>
+	  <artifactId>google-api-services-sheets</artifactId>
+	  <version>${googleapisheets.version}</version>
+	</dependency>
     
   </dependencies>
 

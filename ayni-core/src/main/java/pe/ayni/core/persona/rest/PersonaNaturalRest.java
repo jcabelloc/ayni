@@ -1,5 +1,6 @@
 package pe.ayni.core.persona.rest;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ public class PersonaNaturalRest {
 
 	@CrossOrigin
 	@GetMapping(path = "", params = "max")
-	public List<PersonaNaturalDto> findFirstNumberOfPersonasNaturales(@RequestParam("max") int max ){
+	public List<PersonaNaturalDto> findFirstNumberOfPersonasNaturales(@RequestParam("max") int max, Principal principal){
 		return personaNaturalService.findFirstNumberOfPersonasNaturales(max);
 	}
 	
