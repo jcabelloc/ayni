@@ -286,7 +286,14 @@ public class CreditoServiceImpl implements CreditoService {
 	@Transactional
 	public void amortizarCredito(Integer idCuenta, BigDecimal monto) {
 		Integer nroCondicion = getNroCondicionCredito(idCuenta);
+		CuentaCredito credito = creditoDao.findById(idCuenta);
+		BigDecimal saldoCancelacion = getSaldoCancelacion(credito);
+		
 		detalleCreditoService.amortizarDetallesCredito(idCuenta, nroCondicion, monto);
+
+		if (saldoCancelacion.equals(monto)) {
+			creditoDao.updateEstado(idCuenta, EstadoCredito.CANCELADO);
+		}
 	}
 
 	@Override
@@ -311,6 +318,14 @@ public class CreditoServiceImpl implements CreditoService {
 			creditosDto.add(creditoDto);
 		}
 		return creditosDto;
+	}
+	
+	private BigDecimal getSaldoCancelacion(CuentaCredito credito) {
+		return credito.getDetallesCredito()
+				.stream()
+				.filter(e -> ( e.getNroCuota().intValue() > 0))
+				.map(e -> e.getMontoProgramado().subtract(e.getMontoPagado()))
+				.reduce(BigDecimal.ZERO, BigDecimal::add);
 	}
 
 }

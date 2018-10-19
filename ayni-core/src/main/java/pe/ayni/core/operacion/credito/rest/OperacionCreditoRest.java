@@ -2,6 +2,7 @@ package pe.ayni.core.operacion.credito.rest;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -34,9 +35,9 @@ public class OperacionCreditoRest {
 	
 	@CrossOrigin
 	@PostMapping("/desembolsos")
-	public DesembolsoCreditoDto createDesembolso(@RequestBody DesembolsoCreditoDto desembolsoCredito) {
+	public DesembolsoCreditoDto createDesembolso(@RequestBody DesembolsoCreditoDto desembolsoCredito, Principal principal) {
 		System.out.println(desembolsoCredito);
-		desembolsoCredito.getOperacion().setUsuario("OAJON"); // TODO
+		desembolsoCredito.getOperacion().setUsuario(principal.getName().toUpperCase()); 
 		
 		DesembolsoCreditoDto desemsolsoResponse = operacionCreditoService.createDesembolso(desembolsoCredito);
 		return desemsolsoResponse;
@@ -72,9 +73,9 @@ public class OperacionCreditoRest {
 	
 	@CrossOrigin
 	@PostMapping("/amortizaciones")
-	public AmortizacionCreditoDto createAmortizacion(@RequestBody AmortizacionCreditoDto amortizacionCredito) {
+	public AmortizacionCreditoDto createAmortizacion(@RequestBody AmortizacionCreditoDto amortizacionCredito, Principal principal) {
 		System.out.println(amortizacionCredito);
-		amortizacionCredito.getOperacion().setUsuario("OAJON"); // TODO
+		amortizacionCredito.getOperacion().setUsuario(principal.getName().toUpperCase()); 
 		AmortizacionCreditoDto amortizacionCreditoResponse = operacionCreditoService.createAmortizacion(amortizacionCredito);
 		return amortizacionCreditoResponse;
 	}

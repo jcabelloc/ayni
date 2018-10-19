@@ -67,6 +67,8 @@ public class AppConfig implements WebMvcConfigurer{
 
 		props.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
 		props.setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
+		props.setProperty("hibernate.hql.bulk_id_strategy", env.getProperty("hibernate.hql.bulk_id_strategy"));
+		
 		
 		return props;				
 	}
