@@ -3,6 +3,7 @@ package pe.ayni.core.credito.service;
 import java.math.BigDecimal;
 import java.util.List;
 
+import pe.ayni.core.credito.constraint.CuotaCreditoConstraint.EstadoCuota;
 import pe.ayni.core.credito.dto.CuotaCreditoDto;
 import pe.ayni.core.credito.dto.DetalleCreditoDto;
 import pe.ayni.core.operacion.credito.dto.AmortizacionCuotaDto;
@@ -12,7 +13,7 @@ public interface DetalleCreditoService {
 
 	DetalleCreditoDto findDetalleDesembolso(Integer idCuenta);
 
-	List<CuotaCreditoDto> findCuotasByIdCuentaAndEstado(Integer idCuenta, Integer nroCondicion, String estado);
+	List<CuotaCreditoDto> findCuotasByIdCuentaAndEstado(Integer idCuenta, Integer nroCondicion, EstadoCuota estado);
 
 	List<DetalleCreditoDto> findDetallesCreditoWithSaldo(Integer idCuenta, Integer nroCondicion);
 
@@ -25,7 +26,6 @@ public interface DetalleCreditoService {
 
 	List<AmortizacionDetalleDto> calculateAmortizacionDetalleCredito(Integer idCuenta,
 	Integer nroCondicion, BigDecimal monto);
-	
-	
+
 
 }

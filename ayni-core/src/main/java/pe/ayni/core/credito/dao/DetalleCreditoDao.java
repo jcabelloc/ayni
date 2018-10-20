@@ -17,4 +17,6 @@ public interface DetalleCreditoDao {
 
 	DetalleCredito findById(Integer id);
 
+	List<DetalleCredito> findByIdCuenta(Integer idCuenta, Integer nroCondicion);
+
 }

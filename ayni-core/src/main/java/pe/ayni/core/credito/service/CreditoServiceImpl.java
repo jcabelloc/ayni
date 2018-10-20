@@ -18,6 +18,7 @@ import pe.ayni.core.cliente.entity.Cliente;
 import pe.ayni.core.cliente.service.ClienteService;
 import pe.ayni.core.credito.constraint.CreditoConstraint.EstadoCredito;
 import pe.ayni.core.credito.constraint.CreditoConstraint.FrecuenciaCredito;
+import pe.ayni.core.credito.constraint.CuotaCreditoConstraint.EstadoCuota;
 import pe.ayni.core.credito.dao.CreditoDao;
 import pe.ayni.core.credito.dto.CreditoDto;
 import pe.ayni.core.credito.dto.SimulacionCreditoDto;
@@ -272,8 +273,8 @@ public class CreditoServiceImpl implements CreditoService {
 	@Override
 	@Transactional
 	public List<CuotaCreditoDto> findCuotasByIdCuentaAndEstado(Integer idCuenta, String estado) {
-		CuentaCredito credito = creditoDao.findById(idCuenta);
-		return detalleCreditoService.findCuotasByIdCuentaAndEstado(idCuenta, credito.getNroCondicion(), estado);
+		Integer nroCondicion= getNroCondicionCredito(idCuenta);
+		return detalleCreditoService.findCuotasByIdCuentaAndEstado(idCuenta, nroCondicion, EstadoCuota.valueOf(estado));
 	}
 
 	@Override
@@ -326,6 +327,13 @@ public class CreditoServiceImpl implements CreditoService {
 				.filter(e -> ( e.getNroCuota().intValue() > 0))
 				.map(e -> e.getMontoProgramado().subtract(e.getMontoPagado()))
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
+	}
+
+	@Override
+	@Transactional
+	public List<CuotaCreditoDto> findAllCuotasByIdCuenta(Integer idCuenta) {
+		Integer nroCondicion= getNroCondicionCredito(idCuenta);
+		return detalleCreditoService.findCuotasByIdCuentaAndEstado(idCuenta, nroCondicion, null);
 	}
 
 }

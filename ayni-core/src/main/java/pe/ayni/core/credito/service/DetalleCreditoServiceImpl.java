@@ -41,13 +41,18 @@ public class DetalleCreditoServiceImpl implements DetalleCreditoService {
 
 	@Override
 	@Transactional
-	public List<CuotaCreditoDto> findCuotasByIdCuentaAndEstado(Integer idCuenta, Integer nroCondicion, String estado) {
-		
-		if (!EstadoCuota.PENDIENTE.toString().equals(estado))
-			return null;
-		
+	public List<CuotaCreditoDto> findCuotasByIdCuentaAndEstado(Integer idCuenta, Integer nroCondicion, EstadoCuota estado) {
+
 		List<CuotaCreditoDto> cuotasCredito = new ArrayList<>();
-		List<DetalleCredito> detallesCredito = detalleCreditoDao.findByIdCuentaInCuotasPendientes(idCuenta, nroCondicion);
+		List<DetalleCredito> detallesCredito = null;
+		
+		if (estado == null) {
+			detallesCredito = detalleCreditoDao.findByIdCuenta(idCuenta, nroCondicion);
+		} else if(estado.equals(EstadoCuota.PENDIENTE)) {
+			detallesCredito = detalleCreditoDao.findByIdCuentaInCuotasPendientes(idCuenta, nroCondicion);
+		} else {
+			return null;
+		}
 		
 		Integer nroCuota = 0;
 		CuotaCreditoDto cuota = null;
@@ -113,7 +118,7 @@ public class DetalleCreditoServiceImpl implements DetalleCreditoService {
 		
 		List<AmortizacionCuotaDto> amortizacionesCuotas = new ArrayList<>();
 		
-		List<CuotaCreditoDto> cuotasPendientes = findCuotasByIdCuentaAndEstado(idCuenta, nroCondicion, EstadoCuota.PENDIENTE.toString());
+		List<CuotaCreditoDto> cuotasPendientes = findCuotasByIdCuentaAndEstado(idCuenta, nroCondicion, EstadoCuota.PENDIENTE);
 		
 		List<AmortizacionDetalleDto> detalles = calculateAmortizacionDetalleCredito(idCuenta, nroCondicion, monto);
 		
@@ -162,4 +167,5 @@ public class DetalleCreditoServiceImpl implements DetalleCreditoService {
 		
 		return detalles;
 	}
+
 }

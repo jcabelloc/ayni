@@ -27,5 +27,7 @@ public interface CreditoService {
 	
 	List<CreditoDto> findCreditosByIdCliente(Integer id);
 
+	List<CuotaCreditoDto> findAllCuotasByIdCuenta(Integer idCuenta);
+
 
 }

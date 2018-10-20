@@ -83,6 +83,22 @@ public class DetalleCreditoDaoImpl implements DetalleCreditoDao {
 		Session session = sessionFactory.getCurrentSession();
 		return session.get(DetalleCredito.class, id);
 	}
+
+	@Override
+	public List<DetalleCredito> findByIdCuenta(Integer idCuenta, Integer nroCondicion) {
+		Session session = sessionFactory.getCurrentSession();
+		
+		String query = "SELECT a FROM DetalleCredito a " + 
+						" WHERE a.cuentaCredito.idCuenta = :idCuenta " + 
+						" AND a.nroCondicion = :nroCondicion " +
+						" AND a.nroCuota > 0 " + 
+						" ORDER BY a.nroCuota ASC, a.nroConcepto ASC ";
+		
+		return session.createQuery(query, DetalleCredito.class)
+				.setParameter("idCuenta", idCuenta)
+				.setParameter("nroCondicion", nroCondicion)
+				.getResultList();
+	}
 	
 	
 	

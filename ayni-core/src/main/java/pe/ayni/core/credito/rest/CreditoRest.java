@@ -44,6 +44,12 @@ public class CreditoRest {
 	}
 	
 	@CrossOrigin
+	@GetMapping(path="/{idCuenta}/cuotas-credito")
+	public List<CuotaCreditoDto> findAllCuotasByIdCuenta(@PathVariable Integer idCuenta) {
+		return creditoService.findAllCuotasByIdCuenta(idCuenta);
+	}
+	
+	@CrossOrigin
 	@GetMapping(path="", params= {"by", "input"})
 	public List<CreditoDto> findCreditosByDniCliente(@RequestParam("by") String by, @RequestParam("input") String input) {
 		return creditoService.findCreditosBy(by, input);
