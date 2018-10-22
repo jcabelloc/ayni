@@ -1,12 +1,15 @@
 package pe.ayni.core.credito.service;
 
 import java.math.BigDecimal;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
@@ -39,6 +42,9 @@ public class CreditoServiceImpl implements CreditoService {
 	
 	@Autowired
 	DetalleCreditoService detalleCreditoService;
+	
+	@Resource(name = "feriados")
+	private Map<String, int[]> feriados;
 	
 	@Override
 	@Transactional
@@ -214,7 +220,7 @@ public class CreditoServiceImpl implements CreditoService {
 
 	private BigDecimal calculateInteres(double ted, int nroDias, BigDecimal saldoCapital) {
 
-		return BigDecimal.valueOf((Math.pow(1 + ted, nroDias) - 1) * saldoCapital.doubleValue()).setScale(2, BigDecimal.ROUND_UP);
+		return BigDecimal.valueOf((Math.pow(1 + ted, nroDias) - 1) * saldoCapital.doubleValue()).setScale(1, BigDecimal.ROUND_UP);
 	}
 
 	private double getTEDFromTEM(double tem) {
@@ -230,7 +236,7 @@ public class CreditoServiceImpl implements CreditoService {
 			diasAcumulados += diferenciaEnDias[i];
 			sumaFactores += 1 / Math.pow(1 + ted, diasAcumulados); 
 		}
-		return BigDecimal.valueOf(montoDesembolso.doubleValue()/sumaFactores).setScale(2, BigDecimal.ROUND_UP);
+		return BigDecimal.valueOf(montoDesembolso.doubleValue()/sumaFactores).setScale(1, BigDecimal.ROUND_UP);
 	}
 
 	private int[] getDiferenciaEnDias(LocalDate fechaDesembolso, LocalDate[] fechasVencimiento) {
@@ -251,14 +257,23 @@ public class CreditoServiceImpl implements CreditoService {
 			switch (frecuencia.toString()) {
 				case "DIARIA": {
 					fechasVencimiento[i] = fechasVencimiento[i - 1].plusDays(1);
+					while (isDiaNoHabil(fechasVencimiento[i])) {
+						fechasVencimiento[i] = fechasVencimiento[i].plusDays(1);
+					}
 					break;
 				}
 				case "SEMANAL": {
 					fechasVencimiento[i] = fechasVencimiento[i - 1].plusDays(7);
+					while (isDiaNoHabil(fechasVencimiento[i])) {
+						fechasVencimiento[i] = fechasVencimiento[i].plusDays(1);
+					}
 					break;
 				}
 				case "MENSUAL": {
-					fechasVencimiento[i] = fechasVencimiento[i - 1].plusMonths(1);
+					fechasVencimiento[i] = fechaPrimerVencimiento.plusMonths(i);
+					while (isDiaNoHabil(fechasVencimiento[i])) {
+						fechasVencimiento[i] = fechasVencimiento[i].plusDays(1);
+					}
 					break;
 				}
 				default: {
@@ -268,6 +283,41 @@ public class CreditoServiceImpl implements CreditoService {
 			
 		}
 		return fechasVencimiento;
+	}
+
+	private boolean isDiaNoHabil(LocalDate fecha) {
+		if (fecha.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
+			return true;
+		}
+		if (isFeriadoRegular(fecha.getDayOfYear())) {
+			return true;
+		}
+		if (isFeriadoNoRegular(fecha)) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean isFeriadoNoRegular(LocalDate fecha) {
+		int [] diasFeriados = feriados.get(String.valueOf(fecha.getYear()));
+		if ( diasFeriados == null) {
+			return false;
+		}
+		for (int diaFeriado: diasFeriados ) {
+			if (diaFeriado == fecha.getDayOfYear()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean isFeriadoRegular(int dayOfYear) {
+		for (int diaFeriado: feriados.get("REGULAR")) {
+			if (diaFeriado == dayOfYear) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
