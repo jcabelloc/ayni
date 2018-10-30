@@ -34,4 +34,11 @@ public class ProveedorServiceImpl implements ProveedorService {
 		return new ProveedorDto(proveedor);
 	}
 
+	@Override
+	@Transactional
+	public ProveedorDto findProveedorById(Integer id) {
+		Proveedor proveedor = proveedorDao.findById(id);
+		return buildDtoFrom(proveedor);
+	}
+
 }

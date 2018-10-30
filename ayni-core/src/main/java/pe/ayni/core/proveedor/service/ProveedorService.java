@@ -8,4 +8,6 @@ public interface ProveedorService {
 
 	List<ProveedorDto> findProveedoresBy(String by, String input);
 
+	ProveedorDto findProveedorById(Integer id);
+
 }

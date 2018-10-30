@@ -8,4 +8,6 @@ public interface ProveedorDao {
 
 	List<Proveedor> findBy(String by, String input);
 
+	Proveedor findById(Integer id);
+
 }

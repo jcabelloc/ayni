@@ -51,7 +51,7 @@ public class CreditoRest {
 	
 	@CrossOrigin
 	@GetMapping(path="", params= {"by", "input"})
-	public List<CreditoDto> findCreditosByDniCliente(@RequestParam("by") String by, @RequestParam("input") String input) {
+	public List<CreditoDto> findCreditosBy(@RequestParam("by") String by, @RequestParam("input") String input) {
 		return creditoService.findCreditosBy(by, input);
 	}
 }

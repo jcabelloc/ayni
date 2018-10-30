@@ -14,7 +14,13 @@ public class ProveedorDaoImpl implements ProveedorDao {
 	
 	@Autowired
 	SessionFactory sessionFactory;
-	
+
+	@Override
+	public Proveedor findById(Integer id) {
+		Session session = sessionFactory.getCurrentSession();
+		return session.get(Proveedor.class, id);
+	}
+
 	@Override
 	public List<Proveedor> findBy(String by, String input) {
 		Session session = sessionFactory.getCurrentSession();
@@ -34,5 +40,6 @@ public class ProveedorDaoImpl implements ProveedorDao {
 
 		return proveedores;
 	}
+
 
 }
