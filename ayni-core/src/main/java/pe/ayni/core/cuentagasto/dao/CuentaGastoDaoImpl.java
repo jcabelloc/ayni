@@ -17,15 +17,13 @@ public class CuentaGastoDaoImpl implements CuentaGastoDao {
 	SessionFactory sessionFactory;
 
 	@Override
-	public List<CuentaGasto> findByIdProveedor(Integer id) {
+	public List<CuentaGasto> findAll() {
 		Session session = sessionFactory.getCurrentSession();
 		String query = "SELECT a FROM CuentaGasto a JOIN FETCH a.cuentaContable "
-				+ " WHERE a.estado =: estado "
-				+ " AND a.proveedor.id = :id ";
+				+ " WHERE a.estado =: estado ";
 		
 		return session.createQuery(query, CuentaGasto.class)
 				.setParameter("estado", CuentaGastoConstraint.EstadoCuentaGasto.ACTIVO)
-				.setParameter("id", id)
 				.getResultList();
 
 	}

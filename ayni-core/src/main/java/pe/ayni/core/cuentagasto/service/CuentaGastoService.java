@@ -6,6 +6,6 @@ import pe.ayni.core.cuentagasto.dto.CuentaGastoDto;
 
 public interface CuentaGastoService {
 
-	List<CuentaGastoDto> findCuentasGastoByIdProveedor(Integer id);
+	List<CuentaGastoDto> findAllCuentasGasto();
 
 }

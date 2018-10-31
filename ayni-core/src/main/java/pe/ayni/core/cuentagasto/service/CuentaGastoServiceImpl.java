@@ -20,9 +20,9 @@ public class CuentaGastoServiceImpl implements CuentaGastoService {
 	
 	@Override
 	@Transactional
-	public List<CuentaGastoDto> findCuentasGastoByIdProveedor(Integer id) {
+	public List<CuentaGastoDto> findAllCuentasGasto() {
 		List<CuentaGastoDto> cuentasGastoDto = new ArrayList<>();
-		List<CuentaGasto> cuentasGasto = cuentaGastoDao.findByIdProveedor(id);
+		List<CuentaGasto> cuentasGasto = cuentaGastoDao.findAll();
 		for (CuentaGasto cuentaGasto: cuentasGasto) {
 			CuentaGastoDto cuentaGastoDto = buildDtoFrom(cuentaGasto);
 			cuentasGastoDto.add(cuentaGastoDto);

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import pe.ayni.core.cuentagasto.dto.CuentaGastoDto;
@@ -20,8 +19,8 @@ public class CuentaGastoRest {
 	CuentaGastoService cuentaGastoService;
 	
 	@CrossOrigin
-	@GetMapping(path="", params= {"idProveedor"})
-	public List<CuentaGastoDto> findProveedoresBy(@RequestParam("idProveedor") Integer idProveedor) {
-		return cuentaGastoService.findCuentasGastoByIdProveedor(idProveedor);
+	@GetMapping()
+	public List<CuentaGastoDto> findAllCuentasGasto() {
+		return cuentaGastoService.findAllCuentasGasto();
 	}
 }
