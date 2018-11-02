@@ -33,6 +33,10 @@ public class Proveedor {
 
 	}
 
+	public Proveedor(Integer id) {
+		this.id = id;
+	}
+
 	public Integer getId() {
 		return id;
 	}

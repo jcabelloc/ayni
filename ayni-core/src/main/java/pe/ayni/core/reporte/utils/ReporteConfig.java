@@ -18,4 +18,5 @@ public class ReporteConfig {
 	public String getSpreadSheetId(Reporte nombreReporte) {
 		return env.getProperty(nombreReporte.toString());
 	}
+
 }

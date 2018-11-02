@@ -6,7 +6,7 @@ import pe.ayni.core.operacion.credito.dto.AmortizacionCreditoDto;
 import pe.ayni.core.operacion.credito.dto.AmortizacionDetalleDto;
 import pe.ayni.core.operacion.dto.DetalleOperacionDto;
 
-public interface DetalleOperacionCredito {
+public interface DetalleOperacionCreditoService {
 	
 	List<DetalleOperacionDto> buildDetallesAmortizacion(AmortizacionCreditoDto amortizacionCredito,
 			List<AmortizacionDetalleDto> amortizacionDetalles);

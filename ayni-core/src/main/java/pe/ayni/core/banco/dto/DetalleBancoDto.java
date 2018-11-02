@@ -15,6 +15,8 @@ public class DetalleBancoDto implements Serializable {
 	
 	private String nroOperacion;
 	
+	private String tipoOperacion;
+	
 	private BigDecimal montoOperacion;
 
 	public DetalleBancoDto() {
@@ -59,6 +61,14 @@ public class DetalleBancoDto implements Serializable {
 	public void setNroOperacion(String nroOperacion) {
 		this.nroOperacion = nroOperacion;
 	}
+	
+	public String getTipoOperacion() {
+		return tipoOperacion;
+	}
+
+	public void setTipoOperacion(String tipoOperacion) {
+		this.tipoOperacion = tipoOperacion;
+	}
 
 	public BigDecimal getMontoOperacion() {
 		return montoOperacion;
@@ -71,7 +81,8 @@ public class DetalleBancoDto implements Serializable {
 	@Override
 	public String toString() {
 		return "DetalleBancoDto [id=" + id + ", idCuenta=" + idCuenta + ", fechaOperacion=" + fechaOperacion
-				+ ", nroOperacion=" + nroOperacion + ", montoOperacion=" + montoOperacion + "]";
+				+ ", nroOperacion=" + nroOperacion + ", tipoOperacion=" + tipoOperacion + ", montoOperacion="
+				+ montoOperacion + "]";
 	}
 
 }

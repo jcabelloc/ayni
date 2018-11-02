@@ -1,4 +1,4 @@
-package pe.ayni.core.cuentagasto.constraint;
+package pe.ayni.core.gasto.constraint;
 
 public class CuentaGastoConstraint {
 	

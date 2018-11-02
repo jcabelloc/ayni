@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import pe.ayni.core.banco.constraint.DetalleBancoConstraint.TipoOperacion;
 import pe.ayni.core.banco.dao.DetalleBancoDao;
 import pe.ayni.core.banco.dto.DetalleBancoDto;
 import pe.ayni.core.banco.entity.CuentaBanco;
@@ -42,7 +43,16 @@ public class DetalleBancoServiceImpl implements DetalleBancoService{
 		detalleBanco.setFechaOperacion(LocalDate.parse(detalleBancoDto.getFechaOperacion(), formatter));
 		detalleBanco.setMontoOperacion(detalleBancoDto.getMontoOperacion());
 		detalleBanco.setNroOperacion(detalleBancoDto.getNroOperacion());
+		detalleBanco.setTipoOperacion(TipoOperacion.valueOf(detalleBancoDto.getTipoOperacion()));
 		return detalleBanco;
+	}
+
+	@Override
+	public DetalleBancoDto createRetiro(DetalleBancoDto detalleBancoDto) {
+		DetalleBanco detalleBanco = buildEntityFrom(detalleBancoDto);
+		detalleBancoDao.save(detalleBanco);
+		detalleBancoDto = buildDtoFrom(detalleBanco);
+		return detalleBancoDto;
 	}
 
 }

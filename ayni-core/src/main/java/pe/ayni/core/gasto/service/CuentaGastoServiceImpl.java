@@ -1,4 +1,4 @@
-package pe.ayni.core.cuentagasto.service;
+package pe.ayni.core.gasto.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,9 +8,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import pe.ayni.core.cuentagasto.dao.CuentaGastoDao;
-import pe.ayni.core.cuentagasto.dto.CuentaGastoDto;
-import pe.ayni.core.cuentagasto.entity.CuentaGasto;
+import pe.ayni.core.gasto.dao.CuentaGastoDao;
+import pe.ayni.core.gasto.dto.CuentaGastoDto;
+import pe.ayni.core.gasto.entity.CuentaGasto;
 
 @Service
 public class CuentaGastoServiceImpl implements CuentaGastoService {

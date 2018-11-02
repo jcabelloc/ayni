@@ -21,6 +21,17 @@ public class ProveedorDto implements Serializable {
     public ProveedorDto() {
     	
     }
+    
+	public ProveedorDto(Integer id, String nombre, String tipoPersona, String tipoIdentificacion,
+			String nroIdentificacion) {
+		this.id = id;
+		this.nombre = nombre;
+		this.tipoPersona = tipoPersona;
+		this.tipoIdentificacion = tipoIdentificacion;
+		this.nroIdentificacion = nroIdentificacion;
+	}
+
+
 
 	public ProveedorDto(Proveedor proveedor) {
 		this.id = proveedor.getId();

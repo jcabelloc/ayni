@@ -1,4 +1,4 @@
-package pe.ayni.core.cuentagasto.entity;
+package pe.ayni.core.gasto.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +8,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import pe.ayni.core.cuenta.entity.Cuenta;
-import pe.ayni.core.cuentagasto.constraint.CuentaGastoConstraint.EstadoCuentaGasto;
+import pe.ayni.core.gasto.constraint.CuentaGastoConstraint.EstadoCuentaGasto;
 
 @Entity
 @Table(name="CuentaGasto")

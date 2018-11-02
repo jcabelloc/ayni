@@ -1,8 +1,8 @@
-package pe.ayni.core.cuentagasto.service;
+package pe.ayni.core.gasto.service;
 
 import java.util.List;
 
-import pe.ayni.core.cuentagasto.dto.CuentaGastoDto;
+import pe.ayni.core.gasto.dto.CuentaGastoDto;
 
 public interface CuentaGastoService {
 

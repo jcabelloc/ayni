@@ -63,7 +63,7 @@ public class OperacionCreditoServiceImpl implements OperacionCreditoService {
 	ClienteService clienteService;
 	
 	@Autowired
-	DetalleOperacionCredito detalleOperacionCredito;
+	DetalleOperacionCreditoService detalleOperacionCredito;
 	
 	@Autowired
 	BancoService bancoService;

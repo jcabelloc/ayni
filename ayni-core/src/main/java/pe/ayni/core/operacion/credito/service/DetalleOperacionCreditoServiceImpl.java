@@ -15,7 +15,7 @@ import pe.ayni.core.operacion.dto.DetalleOperacionDto;
 import pe.ayni.core.operacion.service.DetalleOperacionService;
 
 @Service
-public class DetalleOperacionCreditoImpl implements DetalleOperacionCredito {
+public class DetalleOperacionCreditoServiceImpl implements DetalleOperacionCreditoService {
 	@Autowired
 	DetalleOperacionService detalleOperacionService;
 	

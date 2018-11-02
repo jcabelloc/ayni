@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import pe.ayni.core.banco.constraint.DetalleBancoConstraint.TipoOperacion;
 import pe.ayni.core.operacion.entity.DetalleOperacion;
 
 @Entity
@@ -35,6 +38,10 @@ public class DetalleBanco {
 	
 	@Column(name="nroOperacion", nullable=false, length=15)
 	private String nroOperacion;
+	
+	@Enumerated(value=EnumType.STRING)
+	@Column(name="tipoOperacion", nullable=false, length=10)
+	private TipoOperacion tipoOperacion;
 	
 	@Column(name="montoOperacion", nullable=false)
 	private BigDecimal montoOperacion;
@@ -80,6 +87,14 @@ public class DetalleBanco {
 
 	public void setNroOperacion(String nroOperacion) {
 		this.nroOperacion = nroOperacion;
+	}
+	
+	public TipoOperacion getTipoOperacion() {
+		return tipoOperacion;
+	}
+
+	public void setTipoOperacion(TipoOperacion tipoOperacion) {
+		this.tipoOperacion = tipoOperacion;
 	}
 
 	public BigDecimal getMontoOperacion() {

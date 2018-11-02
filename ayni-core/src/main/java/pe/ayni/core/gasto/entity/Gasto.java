@@ -1,4 +1,4 @@
-package pe.ayni.core.cuentagasto.entity;
+package pe.ayni.core.gasto.entity;
 
 import java.time.LocalDate;
 
@@ -15,7 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import pe.ayni.core.cuentagasto.constraint.GastoContraint.TipoComprobante;
+import pe.ayni.core.gasto.constraint.GastoContraint.TipoComprobante;
 import pe.ayni.core.operacion.entity.Operacion;
 import pe.ayni.core.proveedor.entity.Proveedor;
 import pe.ayni.core.seguridad.entity.Usuario;
@@ -48,8 +48,8 @@ public class Gasto {
 	private String nroComprobante;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="aprobador", nullable=false)
-	private Usuario aprobador;
+	@JoinColumn(name="autorizador", nullable=false)
+	private Usuario autorizador;
 	
 	public Gasto() {
 		
@@ -103,20 +103,22 @@ public class Gasto {
 		this.nroComprobante = nroComprobante;
 	}
 
-	public Usuario getAprobador() {
-		return aprobador;
+	public Usuario getAutorizador() {
+		return autorizador;
 	}
 
-	public void setAprobador(Usuario aprobador) {
-		this.aprobador = aprobador;
+	public void setAutorizador(Usuario autorizador) {
+		this.autorizador = autorizador;
 	}
 
 	@Override
 	public String toString() {
 		return "Gasto [id=" + id + ", operacion=" + operacion + ", proveedor=" + proveedor + ", fecha=" + fecha
-				+ ", tipoComprobante=" + tipoComprobante + ", nroComprobante=" + nroComprobante + ", aprobador="
-				+ aprobador + "]";
+				+ ", tipoComprobante=" + tipoComprobante + ", nroComprobante=" + nroComprobante + ", autorizador="
+				+ autorizador + "]";
 	}
+
+	
 	
 	
 }

@@ -36,7 +36,6 @@ public class OperacionCreditoRest {
 	@CrossOrigin
 	@PostMapping("/desembolsos")
 	public DesembolsoCreditoDto createDesembolso(@RequestBody DesembolsoCreditoDto desembolsoCredito, Principal principal) {
-		System.out.println(desembolsoCredito);
 		desembolsoCredito.getOperacion().setUsuario(principal.getName().toUpperCase()); 
 		
 		DesembolsoCreditoDto desemsolsoResponse = operacionCreditoService.createDesembolso(desembolsoCredito);
@@ -53,8 +52,6 @@ public class OperacionCreditoRest {
 	@PostMapping("/desembolsos/build-reporte-solicitud")
 	@ResponseBody
 	public void buildReporteSolicitud(@RequestBody DesembolsoCreditoDto desembolsoCredito, HttpServletResponse response) throws JRException, IOException{
-
-		System.out.println(desembolsoCredito);
 
 	    response.setContentType("application/pdf");
 	    response.setHeader("Content-disposition", "inline; filename=Solicitud_Credito.pdf");
@@ -74,7 +71,6 @@ public class OperacionCreditoRest {
 	@CrossOrigin
 	@PostMapping("/amortizaciones")
 	public AmortizacionCreditoDto createAmortizacion(@RequestBody AmortizacionCreditoDto amortizacionCredito, Principal principal) {
-		System.out.println(amortizacionCredito);
 		amortizacionCredito.getOperacion().setUsuario(principal.getName().toUpperCase()); 
 		AmortizacionCreditoDto amortizacionCreditoResponse = operacionCreditoService.createAmortizacion(amortizacionCredito);
 		return amortizacionCreditoResponse;

@@ -99,7 +99,6 @@ public class ReporteAmortizaciones extends ReporteSheetServlet {
 	    
 	    // COPY
 	    // The ID of the spreadsheet containing the sheet to copy.
-	    //String spreadsheetId = "1mJLufZfWdAsrFIRuOFlwccxJcpAi12e7RWsU3aBPD9E"; // TODO: Update placeholder value.
 	    String spreadsheetId = reporteConfig.getSpreadSheetId(ReporteConstraint.Reporte.AMORTIZACIONES);
 
 	    // The ID of the sheet to copy.

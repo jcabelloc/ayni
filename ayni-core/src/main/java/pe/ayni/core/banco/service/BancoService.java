@@ -6,4 +6,6 @@ public interface BancoService {
 
 	DetalleBancoDto createDeposito(DetalleBancoDto detalleBanco);
 
+	DetalleBancoDto createRetiro(DetalleBancoDto detalleBancoDto);
+
 }

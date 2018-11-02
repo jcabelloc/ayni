@@ -1,8 +1,8 @@
-package pe.ayni.core.cuentagasto.dto;
+package pe.ayni.core.gasto.dto;
 
 import java.io.Serializable;
 
-import pe.ayni.core.cuentagasto.entity.CuentaGasto;
+import pe.ayni.core.gasto.entity.CuentaGasto;
 
 public class CuentaGastoDto implements Serializable{
 

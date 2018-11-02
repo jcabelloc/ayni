@@ -1,4 +1,4 @@
-package pe.ayni.core.cuentagasto.dao;
+package pe.ayni.core.gasto.dao;
 
 import java.util.List;
 
@@ -7,8 +7,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import pe.ayni.core.cuentagasto.constraint.CuentaGastoConstraint;
-import pe.ayni.core.cuentagasto.entity.CuentaGasto;
+import pe.ayni.core.gasto.constraint.CuentaGastoConstraint;
+import pe.ayni.core.gasto.entity.CuentaGasto;
 
 @Repository
 public class CuentaGastoDaoImpl implements CuentaGastoDao {
