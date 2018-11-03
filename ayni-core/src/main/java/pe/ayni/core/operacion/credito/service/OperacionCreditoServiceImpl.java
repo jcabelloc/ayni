@@ -159,6 +159,7 @@ public class OperacionCreditoServiceImpl implements OperacionCreditoService {
 		return desembolso;
 	}
 	
+	@Deprecated
 	@Override
 	@Transactional
 	public void buildReporteSolicitud(DesembolsoCreditoDto desembolsoCredito, OutputStream outStream) throws JRException {

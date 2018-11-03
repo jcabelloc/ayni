@@ -48,6 +48,7 @@ public class OperacionCreditoRest {
 		return operacionCreditoService.findDesembolsoById(id);
 	}
 	
+	@Deprecated
 	@CrossOrigin
 	@PostMapping("/desembolsos/build-reporte-solicitud")
 	@ResponseBody

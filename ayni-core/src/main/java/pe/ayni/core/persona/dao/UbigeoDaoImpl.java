@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import pe.ayni.core.persona.dto.ConfiguracionUbigeoDto.Departamento;
 import pe.ayni.core.persona.dto.ConfiguracionUbigeoDto.Distrito;
 import pe.ayni.core.persona.dto.ConfiguracionUbigeoDto.Provincia;
+import pe.ayni.core.persona.entity.Ubigeo;
 
 @Repository
 public class UbigeoDaoImpl implements UbigeoDao {
@@ -20,6 +21,7 @@ public class UbigeoDaoImpl implements UbigeoDao {
 	@Autowired
 	SessionFactory sessionFactory;
 	
+	@Deprecated
 	@Override
 	public List<Departamento> findAllDepartamentos() {
 		List<Departamento> departamentos = new ArrayList<>();
@@ -33,7 +35,8 @@ public class UbigeoDaoImpl implements UbigeoDao {
 		}
 		return departamentos;
 	}
-
+	
+	@Deprecated
 	@Override
 	public List<Provincia> findAllProvinciasByCodDpto(String codDpto) {
 		List<Provincia> provincias = new ArrayList<>();
@@ -48,7 +51,8 @@ public class UbigeoDaoImpl implements UbigeoDao {
 		}
 		return provincias;
 	}
-
+	
+	@Deprecated
 	@Override
 	public List<Distrito> findAllDistritosByCodDptoAndCodProvincia(String codDpto, String codProvincia) {
 		List<Distrito> distritos = new ArrayList<>();
@@ -63,6 +67,14 @@ public class UbigeoDaoImpl implements UbigeoDao {
 			distritos.add(new Distrito((Integer)line[0], (String)line[1]));
 		}
 		return distritos;
+	}
+
+	@Override
+	public List<Ubigeo> findAll() {
+		Session session = sessionFactory.getCurrentSession();
+		List<Ubigeo> ubigeos = session.createQuery(" SELECT a FROM Ubigeo a ", Ubigeo.class).getResultList();
+		
+		return ubigeos;
 	}
 
 }

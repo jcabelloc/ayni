@@ -1,6 +1,7 @@
 package pe.ayni.core.reporte.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.security.Principal;
 
 import javax.servlet.ServletException;
@@ -43,6 +44,24 @@ public abstract class ReporteSheetServlet extends AbstractAuthorizationCodeServl
 	    return SheetUtils.initializeFlow();
 	}
 	
+	protected void showLinkReporte(String url, HttpServletResponse resp, String glosa) throws IOException {
+		resp.setContentType("text/html");
+		resp.setCharacterEncoding("UTF-8");
+	    PrintWriter writer = resp.getWriter();
+	    writer.println("<!doctype html><html><head>");
+	    writer.println("<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">");
+	    writer.println("<title>" + glosa + "</title>");
+	    writer.println("</head><body>");
+	    writer.println("<div> "
+	    	+ " <h1> " + glosa + " </h1> "
+	    	+ " <hr> "
+	        + "<a href=\"" + url + "\"" 
+	        + "><h3>Acceder...</h3></a>"
+	        );
+	    writer.println("</div>");
+	    writer.println("</body></html>");
+		
+	}
 	
 	
 

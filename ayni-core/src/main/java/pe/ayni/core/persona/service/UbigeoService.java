@@ -10,6 +10,7 @@ import pe.ayni.core.persona.dto.ConfiguracionUbigeoDto.Provincia;
 public interface UbigeoService {
 	
 	ConfiguracionUbigeoDto getConfiguracionUbigeo();
+	ConfiguracionUbigeoDto getConfiguracionUbigeo2();
 
 	Departamento findDptoByIdUbigeo(Integer idUbigeoDpto);
 
