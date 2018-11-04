@@ -15,10 +15,6 @@ import pe.ayni.core.seguridad.service.UserDetailsServiceImpl;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
-	/*
-	@Autowired
-	private DataSource myDataSource;
-	*/
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
@@ -26,39 +22,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and()
 		.authorizeRequests()
-		.antMatchers("/api/**").permitAll() // 2) front end + rest api version
-		//.antMatchers("/api/**").authenticated() // 1) single server version
-		//.antMatchers("/reportes/**").authenticated() // 1) single server version
-		//.antMatchers("/oauth2callback/**").authenticated() // 1) single server version
+		//.antMatchers("/api/**").permitAll() // 2) front end + rest api version
+		.antMatchers("/api/**").authenticated() // 1) single server version
+		.antMatchers("/reportes/**").authenticated() // 1) single server version
+		.antMatchers("/oauth2callback/**").authenticated() // 1) single server version
 		.and()
 		.httpBasic().and()
-		.csrf().disable()  // 2) front end + rest api version
-		//.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()) // 1) single server version
-		//.and()
-		//.logout()
-		//	.logoutUrl("logout")
-			
+		//.csrf().disable()  // 2) front end + rest api version
+		.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()) // 1) single server version
 		;
 	}
 	
-	/*
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-		// add our users for in memory authentication
-		
-		@SuppressWarnings("deprecation")
-		UserBuilder users = User.withDefaultPasswordEncoder();
-		
-		auth.inMemoryAuthentication()
-			.withUser(users.username("john").password("test123").roles("EMPLOYEE"))
-			.withUser(users.username("mary").password("test123").roles("EMPLOYEE", "MANAGER"))
-			.withUser(users.username("susan").password("test123").roles("EMPLOYEE", "ADMIN"));
-	}*/
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		// use jdbc authentication
-		//auth.jdbcAuthentication().dataSource(myDataSource);
 		auth.userDetailsService(userDetailsService);
 	}
 	

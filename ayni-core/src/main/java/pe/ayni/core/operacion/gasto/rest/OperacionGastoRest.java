@@ -24,10 +24,9 @@ public class OperacionGastoRest {
 	@CrossOrigin
 	@PostMapping
 	public RegistroGastoDto createGasto(@RequestBody RegistroGastoDto registroGasto, Principal principal) {
-		//gasto.getOperacion().setUsuario(principal.getName().toUpperCase()); TODO
-		registroGasto.getOperacion().setUsuario("OAJON"); 
+		registroGasto.getOperacion().setUsuario(principal.getName().toUpperCase()); 
+		//registroGasto.getOperacion().setUsuario("OAJON"); 
 
-		System.out.println(registroGasto);
 		RegistroGastoDto gastoResponse = operacionGastoService.createRegistroGasto(registroGasto);
 		return gastoResponse;
 	}

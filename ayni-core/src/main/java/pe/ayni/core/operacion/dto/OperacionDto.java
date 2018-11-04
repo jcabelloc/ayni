@@ -40,6 +40,30 @@ public class OperacionDto implements Serializable{
 		this.nota = nota;
 		this.idOperacionRelacionada = idOperacionRelacionada;
 	}
+	
+	
+	
+	public OperacionDto(Integer id, BigDecimal monto, String moneda, String fechaOperacion, String horaOperacion,
+			String usuario, String tipoOperacion, String nota, Integer idOperacionRelacionada,
+			List<DetalleOperacionDto> detallesOperacion) {
+		super();
+		this.id = id;
+		this.monto = monto;
+		this.moneda = moneda;
+		this.fechaOperacion = fechaOperacion;
+		this.horaOperacion = horaOperacion;
+		this.usuario = usuario;
+		this.tipoOperacion = tipoOperacion;
+		this.nota = nota;
+		this.idOperacionRelacionada = idOperacionRelacionada;
+		this.detallesOperacion = detallesOperacion;
+	}
+
+	public OperacionDto(OperacionDto operacion) {
+		this(operacion.getId(), operacion.getMonto(), operacion.getMoneda(), operacion.getFechaOperacion(), operacion.getHoraOperacion(),
+				operacion.getUsuario(), operacion.getTipoOperacion(), operacion.getNota(), operacion.getIdOperacionRelacionada(),
+				operacion.getDetallesOperacion());
+	} 
 
 	public Integer getId() {
 		return id;

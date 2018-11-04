@@ -62,7 +62,7 @@ public class OperacionServiceImpl implements OperacionService {
 		operacion.setMonto(operacionDto.getMonto());
 		operacion.setMoneda(operacionDto.getMoneda());
 		operacion.setFechaOperacion(LocalDate.now());
-		operacion.setHoraOperacion(LocalTime.now());
+		operacion.setHoraOperacion(LocalTime.now()); //TODO Priority
 		operacion.setUsuario(new Usuario(operacionDto.getUsuario()));
 		operacion.setTipoOperacion(TipoOperacion.valueOf(operacionDto.getTipoOperacion()));
 		operacion.setNota(operacionDto.getNota());
