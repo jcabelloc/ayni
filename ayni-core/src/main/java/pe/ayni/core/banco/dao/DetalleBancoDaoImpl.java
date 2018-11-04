@@ -19,4 +19,10 @@ public class DetalleBancoDaoImpl implements DetalleBancoDao {
 		return (Integer)session.save(detalleBanco);
 	}
 
+	@Override
+	public DetalleBanco findById(Integer id) {
+		Session session = sessionFactory.getCurrentSession();
+		return session.get(DetalleBanco.class, id);
+	}
+
 }

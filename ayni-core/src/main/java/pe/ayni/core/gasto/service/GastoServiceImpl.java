@@ -39,7 +39,8 @@ public class GastoServiceImpl implements GastoService {
 
 	private GastoDto buildDtoFrom(Gasto gasto) {
 		ModelMapper modelMapper = new ModelMapper();
-		GastoDto gastoDto = modelMapper.map(gasto, GastoDto.class);		
+		GastoDto gastoDto = modelMapper.map(gasto, GastoDto.class);	
+		gastoDto.setAutorizador(gasto.getAutorizador().getUsuario());
 		return gastoDto;
 	}
 
@@ -55,6 +56,15 @@ public class GastoServiceImpl implements GastoService {
 		gasto.setProveedor(new Proveedor(gastoDto.getIdProveedor()));
 		
 		return gasto;
+	}
+
+
+	@Override
+	@Transactional
+	public GastoDto findGastoById(Integer id) {
+		Gasto gasto = gastoDao.findById(id);
+		GastoDto gastoDto = buildDtoFrom(gasto);
+		return gastoDto;
 	}
 
 }

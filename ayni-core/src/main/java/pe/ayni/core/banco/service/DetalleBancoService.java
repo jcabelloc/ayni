@@ -8,4 +8,6 @@ public interface DetalleBancoService {
 
 	DetalleBancoDto createRetiro(DetalleBancoDto detalleBanco);
 
+	DetalleBancoDto findDetalleBancoById(Integer id);
+
 }

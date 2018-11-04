@@ -6,4 +6,6 @@ public interface OperacionGastoService {
 
 	RegistroGastoDto createRegistroGasto(RegistroGastoDto registroGasto);
 
+	RegistroGastoDto findGastoById(Integer id);
+
 }

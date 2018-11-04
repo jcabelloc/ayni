@@ -118,5 +118,13 @@ public class Usuario {
 	public void setEmpleado(Empleado empleado) {
 		this.empleado = empleado;
 	}
+
+	@Override
+	public String toString() {
+		return "Usuario [usuario=" + usuario + ", clave=" + "**********" + ", fechaAlta=" + fechaAlta + ", estado=" + estado
+				+ ", fechaBaja=" + fechaBaja + ", fechaHoraInsercion=" + fechaHoraInsercion + ", fechaHoraModificacion="
+				+ fechaHoraModificacion + ", empleado=" + empleado + "]";
+	}
+	
 	
 }

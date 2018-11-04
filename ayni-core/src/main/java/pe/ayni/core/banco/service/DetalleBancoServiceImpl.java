@@ -55,4 +55,10 @@ public class DetalleBancoServiceImpl implements DetalleBancoService{
 		return detalleBancoDto;
 	}
 
+	@Override
+	public DetalleBancoDto findDetalleBancoById(Integer id) {
+		DetalleBanco detalleBanco = detalleBancoDao.findById(id);
+		return buildDtoFrom(detalleBanco);
+	}
+
 }

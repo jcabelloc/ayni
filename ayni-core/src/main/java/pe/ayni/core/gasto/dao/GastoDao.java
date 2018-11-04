@@ -6,4 +6,6 @@ public interface GastoDao {
 
 	Integer save(Gasto gasto);
 
+	Gasto findById(Integer id);
+
 }

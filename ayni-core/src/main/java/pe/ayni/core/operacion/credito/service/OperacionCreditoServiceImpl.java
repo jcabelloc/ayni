@@ -205,6 +205,7 @@ public class OperacionCreditoServiceImpl implements OperacionCreditoService {
 
 
 	@Override
+	@Transactional
 	public AmortizacionCreditoDto findAmortizacionById(Integer id) {
 		OperacionDto operacion = operacionService.findOperacionById(id);
 		Integer idCuenta = getIdCuentaAmortizacion(operacion);

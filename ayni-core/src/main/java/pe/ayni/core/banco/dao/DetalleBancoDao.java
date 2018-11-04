@@ -6,4 +6,6 @@ public interface DetalleBancoDao {
 
 	Integer save(DetalleBanco detalleBanco);
 
+	DetalleBanco findById(Integer id);
+
 }

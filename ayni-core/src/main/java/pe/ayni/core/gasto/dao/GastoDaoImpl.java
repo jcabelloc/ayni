@@ -18,4 +18,10 @@ public class GastoDaoImpl implements GastoDao {
 		Session session = sessionFactory.getCurrentSession();
 		return (Integer)session.save(gasto);
 	}
+
+	@Override
+	public Gasto findById(Integer id) {
+		Session session = sessionFactory.getCurrentSession();
+		return session.get(Gasto.class, id);
+	}
 }

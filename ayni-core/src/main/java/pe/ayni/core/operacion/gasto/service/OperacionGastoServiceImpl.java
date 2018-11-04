@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import pe.ayni.core.banco.dto.DetalleBancoDto;
 import pe.ayni.core.banco.service.BancoService;
+import pe.ayni.core.banco.service.DetalleBancoService;
 import pe.ayni.core.gasto.dto.GastoDto;
 import pe.ayni.core.gasto.service.GastoService;
 import pe.ayni.core.operacion.constraint.DetalleOperacionConstraint.DebitoCredito;
@@ -21,6 +22,7 @@ import pe.ayni.core.operacion.gasto.dto.RegistroGastoDto;
 import pe.ayni.core.operacion.service.DetalleOperacionService;
 import pe.ayni.core.operacion.service.OperacionService;
 import pe.ayni.core.proveedor.dto.ProveedorDto;
+import pe.ayni.core.proveedor.service.ProveedorService;
 
 @Service
 public class OperacionGastoServiceImpl implements OperacionGastoService {
@@ -36,6 +38,12 @@ public class OperacionGastoServiceImpl implements OperacionGastoService {
 	
 	@Autowired
 	GastoService gastoService;
+	
+	@Autowired
+	ProveedorService proveedorService;
+	
+	@Autowired
+	DetalleBancoService detalleBancoService;
 	
 	@Override
 	@Transactional
@@ -69,10 +77,10 @@ public class OperacionGastoServiceImpl implements OperacionGastoService {
 		return registroGasto;
 	}
 
-	private RegistroGastoDto buildRegistroGasto(GastoDto gastoDto, OperacionDto operacion, ProveedorDto proveedor,
+	private RegistroGastoDto buildRegistroGasto(GastoDto gasto, OperacionDto operacion, ProveedorDto proveedor,
 			DetalleBancoDto detalleBanco) {
 		
-		return new RegistroGastoDto(gastoDto, operacion, proveedor, detalleBanco);
+		return new RegistroGastoDto(gasto, operacion, proveedor, detalleBanco);
 	}
 
 	private List<DetalleOperacionDto> buildDetallesOperacionGasto(RegistroGastoDto registroGasto) {
@@ -91,6 +99,21 @@ public class OperacionGastoServiceImpl implements OperacionGastoService {
 		detallesOperacion.add(detalleOperacionEgreso);
 		
 		return detallesOperacion;
+	}
+
+	@Override
+	@Transactional
+	public RegistroGastoDto findGastoById(Integer id) {
+		GastoDto gasto = gastoService.findGastoById(id);
+		OperacionDto operacion = operacionService.findOperacionById(gasto.getIdOperacion());
+		ProveedorDto proveedor = proveedorService.findProveedorById(gasto.getIdProveedor());
+		DetalleBancoDto detalleBanco = null; 
+		DetalleOperacionDto detalle = operacion.getDetallesOperacion().stream().filter(e -> e.getIdDetalleBanco()!= null).findFirst().orElse(null);
+		if (detalle != null) {
+			detalleBanco = detalleBancoService.findDetalleBancoById(detalle.getIdDetalleBanco());
+		}
+		
+		return buildRegistroGasto(gasto, operacion, proveedor, detalleBanco);
 	}
 
 }

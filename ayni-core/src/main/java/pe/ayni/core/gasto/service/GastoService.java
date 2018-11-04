@@ -6,4 +6,6 @@ public interface GastoService {
 
 	GastoDto createGasto(GastoDto gasto);
 
+	GastoDto findGastoById(Integer id);
+
 }

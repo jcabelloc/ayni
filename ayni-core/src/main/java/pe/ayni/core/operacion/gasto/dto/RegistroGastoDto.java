@@ -225,8 +225,10 @@ public class RegistroGastoDto implements Serializable{
 			this.horaOperacion = operacion.getHoraOperacion();
 			this.usuario = operacion.getUsuario();
 			this.tipoOperacion = operacion.getTipoOperacion();
+			this.idCuentaGasto = operacion.getDetallesOperacion().stream().filter(e -> e.getCredito().compareTo(BigDecimal.ZERO) > 0).findFirst().get().getIdCuenta();
 			this.tipoCuentaEgreso = operacion.getDetallesOperacion().stream().filter(e -> e.getDebito().compareTo(BigDecimal.ZERO) > 0).findFirst().get().getTipoCuenta();
 			this.idCuentaEgreso = operacion.getDetallesOperacion().stream().filter(e -> e.getDebito().compareTo(BigDecimal.ZERO) > 0).findFirst().get().getIdCuenta();
+			this.nota = operacion.getNota();
 		}
 
 		public Integer getId() {
