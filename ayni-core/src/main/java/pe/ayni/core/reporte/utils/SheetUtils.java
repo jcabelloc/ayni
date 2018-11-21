@@ -45,7 +45,7 @@ public class SheetUtils {
 	            new NetHttpTransport(), JSON_FACTORY, 
 	            getClientCredential(),
 	            Collections.singleton(SheetsScopes.SPREADSHEETS)).setDataStoreFactory(
-	            DATA_STORE_FACTORY).setAccessType("offline").build();
+	            DATA_STORE_FACTORY).setAccessType("offline").setApprovalPrompt("force").build();
 	}
 	
 	public static Sheets createSheetsService(Credential credential) throws GeneralSecurityException, IOException  {

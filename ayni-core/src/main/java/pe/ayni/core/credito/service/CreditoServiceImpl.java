@@ -342,7 +342,7 @@ public class CreditoServiceImpl implements CreditoService {
 		
 		detalleCreditoService.amortizarDetallesCredito(idCuenta, nroCondicion, monto);
 
-		if (saldoCancelacion.equals(monto)) {
+		if (saldoCancelacion.compareTo(monto) == 0) {
 			creditoDao.updateEstado(idCuenta, EstadoCredito.CANCELADO);
 		}
 	}

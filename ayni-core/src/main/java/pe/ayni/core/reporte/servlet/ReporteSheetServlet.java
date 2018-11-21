@@ -41,7 +41,9 @@ public abstract class ReporteSheetServlet extends AbstractAuthorizationCodeServl
 
 	@Override
 	protected AuthorizationCodeFlow initializeFlow() throws ServletException, IOException {
-	    return SheetUtils.initializeFlow();
+		AuthorizationCodeFlow flow = SheetUtils.initializeFlow();
+		//flow.getCredentialDataStore().clear();
+	    return flow;
 	}
 	
 	protected void showLinkReporte(String url, HttpServletResponse resp, String glosa) throws IOException {
