@@ -26,6 +26,7 @@ import com.google.api.services.sheets.v4.model.BatchUpdateValuesResponse;
 import com.google.api.services.sheets.v4.model.CopySheetToAnotherSpreadsheetRequest;
 import com.google.api.services.sheets.v4.model.SheetProperties;
 import com.google.api.services.sheets.v4.model.Spreadsheet;
+import com.google.api.services.sheets.v4.model.SpreadsheetProperties;
 import com.google.api.services.sheets.v4.model.ValueRange;
 
 import pe.ayni.core.cliente.dto.ClienteDto;
@@ -85,11 +86,11 @@ public class FormatoSolicitudCredito extends ReporteSheetServlet{
 	
 	private String generateFormatoSolicitudCredito(Integer idCliente, CreditoDto creditoDto) throws IOException, GeneralSecurityException {
 
-		Spreadsheet requestBody = new Spreadsheet();
-	    Sheets sheetsService;
+		String title = ReporteConstraint.Reporte.SOLICITUD_CREDITO.toString();
+		Spreadsheet requestBody = new Spreadsheet().setProperties(new SpreadsheetProperties().setTitle(title));
 	    
 	    Credential credential = getCredential();
-		sheetsService = SheetUtils.createSheetsService(credential);
+	    Sheets sheetsService = SheetUtils.createSheetsService(credential);
 		Sheets.Spreadsheets.Create request = sheetsService.spreadsheets().create(requestBody);
 
 	    Spreadsheet response = request.execute();
@@ -158,7 +159,7 @@ public class FormatoSolicitudCredito extends ReporteSheetServlet{
 	    BatchUpdateValuesResponse result = sheetsService.spreadsheets().values().batchUpdate(response.getSpreadsheetId(), body).execute();
 	    System.out.printf("%d cells updated.", result.getTotalUpdatedCells());
 	    
-	    return response.getSpreadsheetUrl();
+	    return response.getSpreadsheetUrl() + "#gid=" + responseNew.getSheetId();
 	    
 
 	

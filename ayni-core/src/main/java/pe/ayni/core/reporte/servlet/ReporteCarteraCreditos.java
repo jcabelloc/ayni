@@ -21,6 +21,7 @@ import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.CopySheetToAnotherSpreadsheetRequest;
 import com.google.api.services.sheets.v4.model.SheetProperties;
 import com.google.api.services.sheets.v4.model.Spreadsheet;
+import com.google.api.services.sheets.v4.model.SpreadsheetProperties;
 import com.google.api.services.sheets.v4.model.UpdateValuesResponse;
 import com.google.api.services.sheets.v4.model.ValueRange;
 
@@ -87,12 +88,12 @@ public class ReporteCarteraCreditos extends ReporteSheetServlet {
 	}
 
 	private String generateReporteCarteraCreditos() throws IOException, GeneralSecurityException {
-
-		Spreadsheet requestBody = new Spreadsheet();
-	    Sheets sheetsService;
+		
+		String title = ReporteConstraint.Reporte.CARTERA_CREDITOS.toString();
+		Spreadsheet requestBody = new Spreadsheet().setProperties(new SpreadsheetProperties().setTitle(title));
 	    
 	    Credential credential = getCredential();
-		sheetsService = SheetUtils.createSheetsService(credential);
+		Sheets sheetsService = SheetUtils.createSheetsService(credential);
 		Sheets.Spreadsheets.Create request = sheetsService.spreadsheets().create(requestBody);
 
 	    Spreadsheet response = request.execute();
@@ -114,16 +115,9 @@ public class ReporteCarteraCreditos extends ReporteSheetServlet {
 	    //Sheets sheetsService = createSheetsService();
 	    Sheets.Spreadsheets.SheetsOperations.CopyTo requestNew =
 	        sheetsService.spreadsheets().sheets().copyTo(spreadsheetId, sheetId, requestBodyNew);
-
+	    
 	    SheetProperties responseNew = requestNew.execute();
 
-	    // TODO: Change code below to process the `response` object:
-	    System.out.println(responseNew);
-	    System.out.println(responseNew.getSheetId());
-    
-	    
-	    
-	    
 	    // UPDATE
 	    List<List<Object>> values = reporteCreditoService.getCarteraCreditos();
 	    int initialRow = 3;
@@ -136,7 +130,7 @@ public class ReporteCarteraCreditos extends ReporteSheetServlet {
 	    System.out.printf("%d cells updated.", result.getUpdatedCells());
 	    
 	    
-	    return response.getSpreadsheetUrl();
+	    return response.getSpreadsheetUrl() + "#gid=" + responseNew.getSheetId();
 	    
 
 	
