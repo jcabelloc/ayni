@@ -8,7 +8,7 @@ public interface ReporteCreditoService {
 	
 	List<List<Object>> getCarteraCreditos();
 
-	List<List<Object>> getAmortizaciones();
+	List<List<Object>> getAmortizaciones(int month, int year);
 
 	List<List<Object>> calculateCuotas(CreditoDto creditoDto);
 

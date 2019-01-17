@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.google.api.client.auth.oauth2.AuthorizationCodeRequestUrl;
 import com.google.api.client.auth.oauth2.Credential;
@@ -49,17 +50,18 @@ public class ReporteAmortizaciones extends ReporteSheetServlet {
 	    super.onAuthorization(req, resp, authorizationUrl);
 	}
 
-	@GetMapping("")
-	public void getReporteCarteraCreditos(HttpServletRequest req, HttpServletResponse resp, Principal principal) 
+	@GetMapping(path="", params= {"month", "year"})
+	public void getReporteAmortizaciones(@RequestParam("month") Integer month, @RequestParam("year") Integer year, 
+			HttpServletRequest req, HttpServletResponse resp, Principal principal) 
 			throws ServletException, IOException, GeneralSecurityException{
 		if (principal != null) {
 			super.service(req, resp);	
 		}
 		if (req.getAttribute("validated") != null && (boolean)req.getAttribute("validated")) {
 			
-			String url = generateReporteCarteraCreditos();
+			String url = generateReporteAmortizaciones(month, year);
 			
-			showLinkReporteCarteraCreditos(url, resp);
+			showLinkReporteAmortizaciones(url, resp);
 			
 			
 		} else {
@@ -68,7 +70,7 @@ public class ReporteAmortizaciones extends ReporteSheetServlet {
 	
 	}
 
-	private void showLinkReporteCarteraCreditos(String url, HttpServletResponse resp) throws IOException {
+	private void showLinkReporteAmortizaciones(String url, HttpServletResponse resp) throws IOException {
 		resp.setContentType("text/html");
 		resp.setCharacterEncoding("UTF-8");
 	    PrintWriter writer = resp.getWriter();
@@ -87,7 +89,7 @@ public class ReporteAmortizaciones extends ReporteSheetServlet {
 		
 	}
 
-	private String generateReporteCarteraCreditos() throws IOException, GeneralSecurityException {
+	private String generateReporteAmortizaciones(int month, int year) throws IOException, GeneralSecurityException {
 
 		String title = ReporteConstraint.Reporte.AMORTIZACIONES.toString();
 		Spreadsheet requestBody = new Spreadsheet().setProperties(new SpreadsheetProperties().setTitle(title));
@@ -119,7 +121,7 @@ public class ReporteAmortizaciones extends ReporteSheetServlet {
 	    SheetProperties responseNew = requestNew.execute();
 
 	    // UPDATE
-	    List<List<Object>> values = reporteCreditoService.getAmortizaciones();
+	    List<List<Object>> values = reporteCreditoService.getAmortizaciones(month, year);
 	    int initialRow = 3;
 	    int lastRow = initialRow + values.size() - 1;
 	    ValueRange body = new ValueRange().setValues(values);

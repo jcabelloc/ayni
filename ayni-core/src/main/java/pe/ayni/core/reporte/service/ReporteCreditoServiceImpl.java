@@ -40,9 +40,9 @@ public class ReporteCreditoServiceImpl implements ReporteCreditoService {
 
 	@Override
 	@Transactional
-	public List<List<Object>> getAmortizaciones() {
+	public List<List<Object>> getAmortizaciones(int month, int year) {
 		List<List<Object>> amortizacionesOut = new ArrayList<>();
-		List<Object[]> amortizacionesIn = reporteCreditoDao.getAmortizaciones();
+		List<Object[]> amortizacionesIn = reporteCreditoDao.getAmortizaciones(month, year);
 		for (Object[] row: amortizacionesIn ) {
 			List<Object> rowAsList= Arrays.asList(row);
 			amortizacionesOut.add(rowAsList);

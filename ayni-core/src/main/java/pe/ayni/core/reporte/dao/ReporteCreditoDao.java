@@ -6,6 +6,6 @@ public interface ReporteCreditoDao {
 
 	List<Object[]> getCarteraCreditos();
 
-	List<Object[]> getAmortizaciones();
+	List<Object[]> getAmortizaciones(int month, int year);
 
 }

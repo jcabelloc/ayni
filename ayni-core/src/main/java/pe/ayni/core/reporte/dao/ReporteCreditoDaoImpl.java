@@ -74,7 +74,7 @@ public class ReporteCreditoDaoImpl implements ReporteCreditoDao {
 	}
 
 	@Override
-	public List<Object[]> getAmortizaciones() {
+	public List<Object[]> getAmortizaciones(int month, int year) {
 		Session session = sessionFactory.getCurrentSession();
 		@SuppressWarnings("unchecked")
 		List<Object[]> amortizaciones = session.createNativeQuery(
@@ -95,8 +95,10 @@ public class ReporteCreditoDaoImpl implements ReporteCreditoDao {
 						+ " 		  AND do.idDetalleCredito = dc.id " 
 						+ " 		  GROUP BY dc.idCuenta, dc.nroCondicion, dc.nroCuota, do.idOperacion) T " 
 						+ "   WHERE op.id = T.idOperacion " 
+						+ "     AND YEAR(op.fechaOperacion) = ?1 "
+						+ "     AND MONTH(op.fechaOperacion) = ?2 "
 						+ "   ORDER BY T.idCuenta, T.nroCondicion, T.nroCuota, T.idOperacion "
-			).list();
+			).setParameter(1,year).setParameter(2,month).list();
 		
 		return amortizaciones;
 	}
