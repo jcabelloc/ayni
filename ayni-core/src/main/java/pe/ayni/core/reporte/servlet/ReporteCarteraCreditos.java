@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.google.api.client.auth.oauth2.AuthorizationCodeRequestUrl;
 import com.google.api.client.auth.oauth2.Credential;
@@ -25,6 +26,7 @@ import com.google.api.services.sheets.v4.model.SpreadsheetProperties;
 import com.google.api.services.sheets.v4.model.UpdateValuesResponse;
 import com.google.api.services.sheets.v4.model.ValueRange;
 
+import pe.ayni.core.credito.constraint.CreditoConstraint.EstadoCredito;
 import pe.ayni.core.reporte.constraint.ReporteConstraint;
 import pe.ayni.core.reporte.service.ReporteCreditoService;
 import pe.ayni.core.reporte.utils.ReporteConfig;
@@ -49,16 +51,19 @@ public class ReporteCarteraCreditos extends ReporteSheetServlet {
 	    super.onAuthorization(req, resp, authorizationUrl);
 	}
 	
-	@GetMapping("")
-	public void getReporteCarteraCreditos(HttpServletRequest req, HttpServletResponse resp, Principal principal) 
+	@GetMapping(path="", params= {"estado"})
+	public void getReporteCarteraCreditos(@RequestParam("estado") String estado,
+			HttpServletRequest req, HttpServletResponse resp, Principal principal) 
 			throws ServletException, IOException, GeneralSecurityException{
 		if (principal != null) {
 			super.service(req, resp);	
 		}
+		EstadoCredito estadoCred = null;
+		if (estado != null && !estado.equals("")) {
+			estadoCred = EstadoCredito.valueOf(estado);
+		}
 		if (req.getAttribute("validated") != null && (boolean)req.getAttribute("validated")) {
-			
-			String url = generateReporteCarteraCreditos();
-			
+			String url = generateReporteCarteraCreditos(estadoCred);
 			showLinkReporteCarteraCreditos(url, resp);
 			
 			
@@ -87,7 +92,7 @@ public class ReporteCarteraCreditos extends ReporteSheetServlet {
 		
 	}
 
-	private String generateReporteCarteraCreditos() throws IOException, GeneralSecurityException {
+	private String generateReporteCarteraCreditos(EstadoCredito estado) throws IOException, GeneralSecurityException {
 		
 		String title = ReporteConstraint.Reporte.CARTERA_CREDITOS.toString();
 		Spreadsheet requestBody = new Spreadsheet().setProperties(new SpreadsheetProperties().setTitle(title));
@@ -119,7 +124,7 @@ public class ReporteCarteraCreditos extends ReporteSheetServlet {
 	    SheetProperties responseNew = requestNew.execute();
 
 	    // UPDATE
-	    List<List<Object>> values = reporteCreditoService.getCarteraCreditos();
+	    List<List<Object>> values = reporteCreditoService.getCarteraCreditos(estado);
 	    int initialRow = 3;
 	    int lastRow = initialRow + values.size() - 1;
 	    ValueRange body = new ValueRange().setValues(values);

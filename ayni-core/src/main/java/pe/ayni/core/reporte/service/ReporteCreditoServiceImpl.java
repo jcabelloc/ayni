@@ -12,6 +12,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import pe.ayni.core.credito.constraint.CreditoConstraint.EstadoCredito;
 import pe.ayni.core.credito.dto.CreditoDto;
 import pe.ayni.core.credito.service.CreditoService;
 import pe.ayni.core.reporte.dao.ReporteCreditoDao;
@@ -27,10 +28,10 @@ public class ReporteCreditoServiceImpl implements ReporteCreditoService {
 
 	@Override
 	@Transactional
-	public List<List<Object>> getCarteraCreditos() {
+	public List<List<Object>> getCarteraCreditos(EstadoCredito estado) {
 		
 		List<List<Object>> carteraOut = new ArrayList<>();
-		List<Object[]> carteraIn = reporteCreditoDao.getCarteraCreditos();
+		List<Object[]> carteraIn = reporteCreditoDao.getCarteraCreditos(estado);
 		for (Object[] row: carteraIn ) {
 			List<Object> rowAsList= Arrays.asList(row);
 			carteraOut.add(rowAsList);
