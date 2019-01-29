@@ -122,13 +122,14 @@ public class ReporteCarteraCreditos extends ReporteSheetServlet {
 	        sheetsService.spreadsheets().sheets().copyTo(spreadsheetId, sheetId, requestBodyNew);
 	    
 	    SheetProperties responseNew = requestNew.execute();
+	    String sheetName = responseNew.getTitle(); 
 
 	    // UPDATE
 	    List<List<Object>> values = reporteCreditoService.getCarteraCreditos(estado);
 	    int initialRow = 3;
 	    int lastRow = initialRow + values.size() - 1;
 	    ValueRange body = new ValueRange().setValues(values);
-	    final String range = "Copy of Sheet1!A" + initialRow + ":X" + lastRow;
+	    final String range = sheetName + "!A" + initialRow + ":X" + lastRow;
 	    UpdateValuesResponse result = sheetsService.spreadsheets().values().update(response.getSpreadsheetId(), range, body)
 	                    .setValueInputOption("RAW")
 	                    .execute();

@@ -114,13 +114,12 @@ public class FormatoSolicitudCredito extends ReporteSheetServlet{
 	        sheetsService.spreadsheets().sheets().copyTo(spreadsheetId, sheetId, requestBodyNew);
 
 	    SheetProperties responseNew = requestNew.execute();
+	    String sheetName = responseNew.getTitle(); 
 
 	    // TODO: Change code below to process the `response` object:
 	    System.out.println(responseNew);
 	    System.out.println(responseNew.getSheetId());
     
-	    
-	    String sheetName = "Copy of Sheet1!";
 	    
 	    // UPDATE
 	    List<List<Object>> values = reporteCreditoService.calculateCuotas(creditoDto);
@@ -129,15 +128,15 @@ public class FormatoSolicitudCredito extends ReporteSheetServlet{
 	    //Cuotas
 	    int initialRow = 15;
 	    int lastRow = initialRow + values.size() - 1;
-	    final String range = sheetName + "B" + initialRow + ":G" + lastRow;
+	    final String range = sheetName + "!B" + initialRow + ":G" + lastRow;
 	    
 	    //Cliente
-	    final String rangeCliente = sheetName + "C5:C6";
+	    final String rangeCliente = sheetName + "!C5:C6";
 	    List<List<Object>> valuesCliente = Arrays.asList(Arrays.asList(clienteDto.getNroIdentificacion()), Arrays.asList(clienteDto.getNombre()));
 	    
 	    //Credito Col C and Col F
-	    final String rangeCredColC = sheetName + "C9:C11";
-	    final String rangeCredColF = sheetName + "F9:F10";
+	    final String rangeCredColC = sheetName + "!C9:C11";
+	    final String rangeCredColF = sheetName + "!F9:F10";
 	    String fechaDesembolso = reporteCreditoService.formatStringDate(creditoDto.getFechaDesembolso());
 	    List<List<Object>> valuesCredColC = Arrays.asList(
 	    		Arrays.asList(creditoDto.getMontoDesembolso()), 

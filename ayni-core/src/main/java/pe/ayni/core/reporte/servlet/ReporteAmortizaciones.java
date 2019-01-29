@@ -119,6 +119,7 @@ public class ReporteAmortizaciones extends ReporteSheetServlet {
 	        sheetsService.spreadsheets().sheets().copyTo(spreadsheetId, sheetId, requestBodyNew);
 
 	    SheetProperties responseNew = requestNew.execute();
+	    String sheetName = responseNew.getTitle(); 
 
 	    // UPDATE
 	    List<List<Object>> values = reporteCreditoService.getAmortizaciones(month, year);
@@ -126,7 +127,7 @@ public class ReporteAmortizaciones extends ReporteSheetServlet {
 	    int lastRow = initialRow + values.size() - 1;
 	    ValueRange body = new ValueRange().setValues(values);
 	    //final String range = "Copy of Sheet1!A3:S4";
-	    final String range = "Copy of Sheet1!A" + initialRow + ":L" + lastRow;
+	    final String range = sheetName + "!A" + initialRow + ":L" + lastRow;
 	    UpdateValuesResponse result = sheetsService.spreadsheets().values().update(response.getSpreadsheetId(), range, body)
 	                    .setValueInputOption("RAW")
 	                    .execute();
