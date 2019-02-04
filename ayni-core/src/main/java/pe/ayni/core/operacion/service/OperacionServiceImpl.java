@@ -1,7 +1,7 @@
 package pe.ayni.core.operacion.service;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 import javax.transaction.Transactional;
 
@@ -61,8 +61,17 @@ public class OperacionServiceImpl implements OperacionService {
 
 		operacion.setMonto(operacionDto.getMonto());
 		operacion.setMoneda(operacionDto.getMoneda());
-		operacion.setFechaOperacion(LocalDate.now());
-		operacion.setHoraOperacion(LocalTime.now()); //TODO Priority
+		
+		// Beginning working in progress
+		ZoneId peruZoneId = ZoneId.of("UTC-05:00");
+		LocalDateTime peruDateTime = LocalDateTime.now(peruZoneId);
+		operacion.setFechaOperacion(peruDateTime.toLocalDate());
+		operacion.setHoraOperacion(peruDateTime.toLocalTime()); 
+		// operacion.setFechaOperacion(LocalDate.now());
+		// operacion.setHoraOperacion(LocalTime.now()); //TODO Priority
+		
+		// End working in progress
+		
 		operacion.setUsuario(new Usuario(operacionDto.getUsuario()));
 		operacion.setTipoOperacion(TipoOperacion.valueOf(operacionDto.getTipoOperacion()));
 		operacion.setNota(operacionDto.getNota());
