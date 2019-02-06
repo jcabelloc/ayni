@@ -26,40 +26,39 @@ import com.google.api.services.sheets.v4.model.UpdateValuesResponse;
 import com.google.api.services.sheets.v4.model.ValueRange;
 
 import pe.ayni.core.reporte.constraint.ReporteConstraint;
-import pe.ayni.core.reporte.service.ReporteCreditoService;
+import pe.ayni.core.reporte.service.ReporteOperacionService;
 import pe.ayni.core.reporte.utils.ReporteConfig;
 import pe.ayni.core.reporte.utils.SheetUtils;
 
 @Controller
-@RequestMapping("/reportes/amortizaciones")
-public class ReporteAmortizaciones extends ReporteSheetServlet {
-
+@RequestMapping("/reportes/operaciones")
+public class ReporteOperaciones extends ReporteSheetServlet{
 	private static final long serialVersionUID = 1L;
 	
 	@Autowired
-	ReporteCreditoService reporteCreditoService; 
+	ReporteOperacionService reporteOperacionService; 
 	
 	@Autowired
 	ReporteConfig reporteConfig;
-
+	
 	@Override
 	protected void onAuthorization(HttpServletRequest req, HttpServletResponse resp, 
 			AuthorizationCodeRequestUrl authorizationUrl) throws ServletException, IOException {
-	    authorizationUrl.setState("amortizaciones");
+	    authorizationUrl.setState("operaciones");
 	    super.onAuthorization(req, resp, authorizationUrl);
 	}
-
-	@GetMapping(path="", params= {"month", "year"})
-	public void getReporteAmortizaciones(@RequestParam("month") Integer month, @RequestParam("year") Integer year, 
+	
+	@GetMapping(path="", params= {"desde", "hasta"})
+	public void getReporteCarteraCreditos(@RequestParam("desde") String desde,
+			@RequestParam("hasta") String hasta,
 			HttpServletRequest req, HttpServletResponse resp, Principal principal) 
 			throws ServletException, IOException, GeneralSecurityException{
 		if (principal != null) {
 			super.service(req, resp);	
 		}
 		if (req.getAttribute("validated") != null && (boolean)req.getAttribute("validated")) {
-			
-			String url = generateReporteAmortizaciones(month, year);
-			String glosa = "Reporte de Amortizaciones";
+			String url = generateReporteOperaciones(desde, hasta);
+			String glosa = "Reporte de Operaciones";
 			showLinkReporte(url, resp, glosa);
 			
 			
@@ -68,10 +67,10 @@ public class ReporteAmortizaciones extends ReporteSheetServlet {
 		}
 	
 	}
+	
+	private String generateReporteOperaciones(String desde, String hasta) throws IOException, GeneralSecurityException {
 
-	private String generateReporteAmortizaciones(int month, int year) throws IOException, GeneralSecurityException {
-
-		String title = ReporteConstraint.Reporte.AMORTIZACIONES.toString();
+		String title = ReporteConstraint.Reporte.OPERACIONES.toString();
 		Spreadsheet requestBody = new Spreadsheet().setProperties(new SpreadsheetProperties().setTitle(title));
 	   
 	    Credential credential = getCredential();
@@ -82,7 +81,7 @@ public class ReporteAmortizaciones extends ReporteSheetServlet {
 	    
 	    // COPY
 	    // The ID of the spreadsheet containing the sheet to copy.
-	    String spreadsheetId = reporteConfig.getSpreadSheetId(ReporteConstraint.Reporte.AMORTIZACIONES);
+	    String spreadsheetId = reporteConfig.getSpreadSheetId(ReporteConstraint.Reporte.OPERACIONES);
 
 	    // The ID of the sheet to copy.
 	    int sheetId = 0; // TODO: Update placeholder value.
@@ -102,7 +101,7 @@ public class ReporteAmortizaciones extends ReporteSheetServlet {
 	    String sheetName = responseNew.getTitle(); 
 
 	    // UPDATE
-	    List<List<Object>> values = reporteCreditoService.getAmortizaciones(month, year);
+	    List<List<Object>> values = reporteOperacionService.getOperaciones(desde, hasta);
 	    int initialRow = 3;
 	    int lastRow = initialRow + values.size() - 1;
 	    ValueRange body = new ValueRange().setValues(values);
@@ -116,5 +115,4 @@ public class ReporteAmortizaciones extends ReporteSheetServlet {
 	    return response.getSpreadsheetUrl() + "#gid=" + responseNew.getSheetId();
 
 	}
-	
 }

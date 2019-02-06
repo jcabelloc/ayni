@@ -1,7 +1,6 @@
 package pe.ayni.core.reporte.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.security.GeneralSecurityException;
 import java.security.Principal;
 import java.util.List;
@@ -64,7 +63,8 @@ public class ReporteCarteraCreditos extends ReporteSheetServlet {
 		}
 		if (req.getAttribute("validated") != null && (boolean)req.getAttribute("validated")) {
 			String url = generateReporteCarteraCreditos(estadoCred);
-			showLinkReporteCarteraCreditos(url, resp);
+			String glosa = "Reporte de Cartera de Creditos";
+			showLinkReporte(url, resp, glosa);
 			
 			
 		} else {
@@ -72,26 +72,8 @@ public class ReporteCarteraCreditos extends ReporteSheetServlet {
 		}
 	
 	}
-
-	private void showLinkReporteCarteraCreditos(String url, HttpServletResponse resp) throws IOException {
-		resp.setContentType("text/html");
-		resp.setCharacterEncoding("UTF-8");
-	    PrintWriter writer = resp.getWriter();
-	    writer.println("<!doctype html><html><head>");
-	    writer.println("<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">");
-	    writer.println("<title>" + "Reporte de Cartera de Creditos" + "</title>");
-	    writer.println("</head><body>");
-	    writer.println("<div> "
-	    	+ " <h1> Reporte de Cartera de Creditos </h1> "
-	    	+ " <hr> "
-	        + "<a href=\"" + url + "\"" 
-	        + "><h3>Acceder al Reporte</h3></a>"
-	        );
-	    writer.println("</div>");
-	    writer.println("</body></html>");
-		
-	}
-
+	
+	
 	private String generateReporteCarteraCreditos(EstadoCredito estado) throws IOException, GeneralSecurityException {
 		
 		String title = ReporteConstraint.Reporte.CARTERA_CREDITOS.toString();
