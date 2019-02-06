@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import pe.ayni.core.operacion.constraint.OperacionConstraint.TipoOperacion;
 import pe.ayni.core.reporte.dao.ReporteOperacionDao;
 
 @Service
@@ -19,9 +20,9 @@ public class ReporteOperacionServiceImpl implements ReporteOperacionService {
 
 	@Override
 	@Transactional
-	public List<List<Object>> getOperaciones(String desde, String hasta) {
+	public List<List<Object>> getOperaciones(TipoOperacion tipoOperacion, String desde, String hasta) {
 		List<List<Object>> operacionesOut = new ArrayList<>();
-		List<Object[]> operacionesIn = reporteOperacionDao.getOperaciones(desde, hasta);
+		List<Object[]> operacionesIn = reporteOperacionDao.getOperaciones(tipoOperacion, desde, hasta);
 		for (Object[] row: operacionesIn ) {
 			List<Object> rowAsList= Arrays.asList(row);
 			operacionesOut.add(rowAsList);

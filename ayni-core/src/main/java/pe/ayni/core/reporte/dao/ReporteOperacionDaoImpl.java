@@ -7,6 +7,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import pe.ayni.core.operacion.constraint.OperacionConstraint.TipoOperacion;
+
 @Repository
 public class ReporteOperacionDaoImpl implements ReporteOperacionDao {
 
@@ -14,7 +16,7 @@ public class ReporteOperacionDaoImpl implements ReporteOperacionDao {
 	SessionFactory sessionFactory;
 	
 	@Override
-	public List<Object[]> getOperaciones(String desde, String hasta) {
+	public List<Object[]> getOperaciones(TipoOperacion tipoOperacion, String desde, String hasta) {
 		Session session = sessionFactory.getCurrentSession();
 		String query = 				 
 				" SELECT	" 
@@ -26,16 +28,20 @@ public class ReporteOperacionDaoImpl implements ReporteOperacionDao {
 					+ " do.ctaContable ctaContable, "
 					+ " (SELECT cc.tipoCuenta FROM CuentaContable cc WHERE cc.ctaContable = do.ctaContable) tipoCuenta, "
 					+ " do.debito debito, "
-					+ " do.credito credito "
+					+ " do.credito credito, "
+					+ " op.nota "
 				+ " FROM  Operacion op, DetalleOperacion do " 
 				+ " WHERE op.id = do.idOperacion "
-				+ " AND op.fechaOperacion BETWEEN ?1 AND ?2 "
-				+ " ORDER BY op.id, do.nroDetalle ";
+				+ " AND op.fechaOperacion BETWEEN ?1 AND ?2 ";
+		if (tipoOperacion != null) {
+			query = query + " AND op.tipoOperacion = '" + tipoOperacion.toString() + "' ";
+		}
+		query = query + " ORDER BY op.id, do.nroDetalle ";
 		@SuppressWarnings("unchecked")
-		List<Object[]> amortizaciones = session.createNativeQuery(query)
+		List<Object[]> operaciones = session.createNativeQuery(query)
 			.setParameter(1,desde).setParameter(2,hasta).list();
 		
-		return amortizaciones;
+		return operaciones;
 	}
 
 	

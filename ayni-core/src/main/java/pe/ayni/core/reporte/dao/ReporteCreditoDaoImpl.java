@@ -48,7 +48,7 @@ public class ReporteCreditoDaoImpl implements ReporteCreditoDao {
 						+ "		AND dc.nroConcepto = 0 " 
 						+ "		AND dc.nroCondicion = cr.nroCondicion " 
 						+ "		AND dc.montoProgramado > dc.montoPagado " 
-						+ "	),'N/D') diasAtraso, " 
+						+ "	),0) diasAtraso, " 
 						+ "    IFNULL((SELECT DATE_FORMAT(MAX(op.fechaOperacion), '%d/%m/%Y') FROM DetalleOperacion do, Operacion op " 
 						+ "		WHERE do.idCuenta = cr.idCuenta "  
 						+ "		AND do.idOperacion = op.id " 

@@ -25,6 +25,7 @@ import com.google.api.services.sheets.v4.model.SpreadsheetProperties;
 import com.google.api.services.sheets.v4.model.UpdateValuesResponse;
 import com.google.api.services.sheets.v4.model.ValueRange;
 
+import pe.ayni.core.operacion.constraint.OperacionConstraint.TipoOperacion;
 import pe.ayni.core.reporte.constraint.ReporteConstraint;
 import pe.ayni.core.reporte.service.ReporteOperacionService;
 import pe.ayni.core.reporte.utils.ReporteConfig;
@@ -48,16 +49,21 @@ public class ReporteOperaciones extends ReporteSheetServlet{
 	    super.onAuthorization(req, resp, authorizationUrl);
 	}
 	
-	@GetMapping(path="", params= {"desde", "hasta"})
-	public void getReporteCarteraCreditos(@RequestParam("desde") String desde,
-			@RequestParam("hasta") String hasta,
+	@GetMapping(path="", params= {"tipoOperacion", "desde", "hasta"})
+	public void getReporteCarteraCreditos(@RequestParam("tipoOperacion") String tipoOperacionReq,
+			@RequestParam("desde") String desde, @RequestParam("hasta") String hasta,
 			HttpServletRequest req, HttpServletResponse resp, Principal principal) 
 			throws ServletException, IOException, GeneralSecurityException{
 		if (principal != null) {
 			super.service(req, resp);	
 		}
+		TipoOperacion tipoOperacion = null;
+		if (tipoOperacionReq != null && !tipoOperacionReq.equals("")) {
+			tipoOperacion = TipoOperacion.valueOf(tipoOperacionReq);
+		}
+		
 		if (req.getAttribute("validated") != null && (boolean)req.getAttribute("validated")) {
-			String url = generateReporteOperaciones(desde, hasta);
+			String url = generateReporteOperaciones(tipoOperacion, desde, hasta);
 			String glosa = "Reporte de Operaciones";
 			showLinkReporte(url, resp, glosa);
 			
@@ -68,7 +74,7 @@ public class ReporteOperaciones extends ReporteSheetServlet{
 	
 	}
 	
-	private String generateReporteOperaciones(String desde, String hasta) throws IOException, GeneralSecurityException {
+	private String generateReporteOperaciones(TipoOperacion tipoOperacion, String desde, String hasta) throws IOException, GeneralSecurityException {
 
 		String title = ReporteConstraint.Reporte.OPERACIONES.toString();
 		Spreadsheet requestBody = new Spreadsheet().setProperties(new SpreadsheetProperties().setTitle(title));
@@ -101,12 +107,12 @@ public class ReporteOperaciones extends ReporteSheetServlet{
 	    String sheetName = responseNew.getTitle(); 
 
 	    // UPDATE
-	    List<List<Object>> values = reporteOperacionService.getOperaciones(desde, hasta);
+	    List<List<Object>> values = reporteOperacionService.getOperaciones(tipoOperacion, desde, hasta);
 	    int initialRow = 3;
 	    int lastRow = initialRow + values.size() - 1;
 	    ValueRange body = new ValueRange().setValues(values);
 	    //final String range = "Copy of Sheet1!A3:S4";
-	    final String range = sheetName + "!A" + initialRow + ":L" + lastRow;
+	    final String range = sheetName + "!A" + initialRow + ":M" + lastRow;
 	    UpdateValuesResponse result = sheetsService.spreadsheets().values().update(response.getSpreadsheetId(), range, body)
 	                    .setValueInputOption("RAW")
 	                    .execute();
