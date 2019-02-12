@@ -19,17 +19,26 @@ public class CarteraRest {
 	
 	
 	@CrossOrigin
-	@GetMapping(path="/saldo", params= {"mes", "groupBy"})
-	public XYSerieDto queryCarteraSaldo(@RequestParam("mes") String mes, @RequestParam("groupBy") String groupBy){
+	@GetMapping(path="/saldo", params= {"desde", "hasta", "groupBy"})
+	public XYSerieDto queryCarteraSaldo(@RequestParam("desde") String desde, @RequestParam("hasta") String hasta, 
+			@RequestParam("groupBy") String groupBy){
 		
-		return carteraService.queryCarteraSaldo(mes, groupBy);
+		return carteraService.queryCarteraSaldo(desde, hasta, groupBy);
 	}
 	
 	@CrossOrigin
-	@GetMapping(path="/atrasada", params= {"diasAtrasoMayorA", "mes", "groupBy"})
+	@GetMapping(path="/atrasada", params= {"diasAtrasoMayorA", "desde", "hasta", "groupBy"})
 	public XYSerieDto queryCarteraAtrasada(@RequestParam("diasAtrasoMayorA") Integer diasAtrasoMayorA, 
-			@RequestParam("mes") String mes, @RequestParam("groupBy") String groupBy){
+			@RequestParam("desde") String desde, @RequestParam("hasta") String hasta, @RequestParam("groupBy") String groupBy){
 		
-		return carteraService.queryCarteraAtrasada(diasAtrasoMayorA, mes, groupBy);
+		return carteraService.queryCarteraAtrasada(diasAtrasoMayorA, desde, hasta, groupBy);
+	}
+	
+	@CrossOrigin
+	@GetMapping(path="/desembolsos", params= {"valor", "desde", "hasta", "groupBy"})
+	public XYSerieDto queryDesembolsos(@RequestParam("valor") String valor, @RequestParam("desde") String desde, 
+			@RequestParam("hasta") String hasta, @RequestParam("groupBy") String groupBy){
+		
+		return carteraService.queryDesembolsos(valor, desde, hasta,groupBy);
 	}
 }
