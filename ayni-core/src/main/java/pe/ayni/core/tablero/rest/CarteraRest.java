@@ -19,11 +19,17 @@ public class CarteraRest {
 	
 	
 	@CrossOrigin
-	@GetMapping(path="", params= {"valor", "mes", "groupBy"})
-	public XYSerieDto queryCartera(@RequestParam("valor") String valor,@RequestParam("mes") String mes,
-			@RequestParam("groupBy") String groupBy){
+	@GetMapping(path="/saldo", params= {"mes", "groupBy"})
+	public XYSerieDto queryCarteraSaldo(@RequestParam("mes") String mes, @RequestParam("groupBy") String groupBy){
 		
-		return carteraService.queryCartera(valor, mes, groupBy);
+		return carteraService.queryCarteraSaldo(mes, groupBy);
 	}
-	//dato=saldoCapital&mes=Febrero&groupBy=diaMes
+	
+	@CrossOrigin
+	@GetMapping(path="/atrasada", params= {"diasAtrasoMayorA", "mes", "groupBy"})
+	public XYSerieDto queryCarteraAtrasada(@RequestParam("diasAtrasoMayorA") Integer diasAtrasoMayorA, 
+			@RequestParam("mes") String mes, @RequestParam("groupBy") String groupBy){
+		
+		return carteraService.queryCarteraAtrasada(diasAtrasoMayorA, mes, groupBy);
+	}
 }

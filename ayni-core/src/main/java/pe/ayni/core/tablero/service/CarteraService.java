@@ -4,6 +4,7 @@ import pe.ayni.core.tablero.dto.XYSerieDto;
 
 public interface CarteraService {
 
-	XYSerieDto queryCartera(String dato, String mes, String groupBy);
+	XYSerieDto queryCarteraSaldo(String mes, String groupBy);
+	XYSerieDto queryCarteraAtrasada(Integer diasAtrasoMayorA, String mes, String groupBy);
 
 }

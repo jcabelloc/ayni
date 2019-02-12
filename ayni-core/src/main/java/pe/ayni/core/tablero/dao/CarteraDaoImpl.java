@@ -14,11 +14,11 @@ public class CarteraDaoImpl implements CarteraDao {
 	SessionFactory sessionFactory;
 
 	@Override
-	public List<Object[]> queryCartera(String valor, String mes, String groupBy) {
+	public List<Object[]> queryCarteraSaldo(String mes, String groupBy) {
 
 		Session session = sessionFactory.getCurrentSession();
 		String query = 
-				" SELECT df." + groupBy + ", " + " SUM(" + valor + ") " + 
+				" SELECT df." + groupBy + ", " + " SUM(" + "saldoCapital" + ") " + 
 						" FROM FactCarteraCreditos fc, DimFecha df " + 
 						" WHERE fc.idFecha = df.idFecha " + 
 						"   AND df.mes = '" + mes + "' " + 
@@ -27,6 +27,24 @@ public class CarteraDaoImpl implements CarteraDao {
 		
 		@SuppressWarnings("unchecked")
 		List<Object[]> data = session.createNativeQuery(query).list();
+		return data;
+	}
+
+	@Override
+	public List<Object[]> queryCarteraAtrasada(Integer diasAtrasoMayorA, String mes, String groupBy) {
+		Session session = sessionFactory.getCurrentSession();
+		String query = 
+				 "SELECT df." + groupBy + ", " + 
+						" SUM(CASE WHEN fc.diasAtraso > ?1 then fc.saldoCapital else 0 end) " + 
+						" FROM FactCarteraCreditos fc, DimFecha df " + 
+						" WHERE fc.idFecha = df.idFecha " + 
+						"   AND df.mes = '" + mes + "' " + 
+						" GROUP BY " + groupBy +  
+						" ORDER BY " + groupBy;
+		
+		@SuppressWarnings("unchecked")
+		List<Object[]> data = session.createNativeQuery(query)
+			.setParameter(1, diasAtrasoMayorA).list();
 		return data;
 	}
 	

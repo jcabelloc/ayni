@@ -4,6 +4,8 @@ import java.util.List;
 
 public interface CarteraDao {
 
-	List<Object[]> queryCartera(String valor, String mes, String groupBy);
+	List<Object[]> queryCarteraSaldo(String mes, String groupBy);
+
+	List<Object[]> queryCarteraAtrasada(Integer diasAtrasoMayorA, String mes, String groupBy);
 
 }
