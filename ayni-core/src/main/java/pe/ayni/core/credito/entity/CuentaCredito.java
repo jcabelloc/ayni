@@ -44,6 +44,15 @@ public class CuentaCredito extends Cuenta {
 	@JoinColumn(name="usuarioAprobador", nullable=false)
 	private Usuario usuarioAprobador;
 	
+	@ManyToOne(fetch = FetchType.LAZY) // default EAGER
+	@JoinColumn(name="analista", nullable=false)
+	private Usuario analista;
+	
+	@ManyToOne(fetch = FetchType.LAZY) // default EAGER
+	@JoinColumn(name="promotor", nullable=false)
+	private Usuario promotor;
+	
+	
 	@Column(name="capitalInicial", nullable=false)
 	private BigDecimal capitalInicial;
 	
@@ -112,6 +121,22 @@ public class CuentaCredito extends Cuenta {
 
 	public void setUsuarioAprobador(Usuario usuarioAprobador) {
 		this.usuarioAprobador = usuarioAprobador;
+	}
+	
+	public Usuario getAnalista() {
+		return analista;
+	}
+
+	public void setAnalista(Usuario analista) {
+		this.analista = analista;
+	}
+
+	public Usuario getPromotor() {
+		return promotor;
+	}
+
+	public void setPromotor(Usuario promotor) {
+		this.promotor = promotor;
 	}
 
 	public BigDecimal getCapitalInicial() {

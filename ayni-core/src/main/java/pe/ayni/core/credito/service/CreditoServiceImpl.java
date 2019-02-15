@@ -81,6 +81,8 @@ public class CreditoServiceImpl implements CreditoService {
 			creditoDto.getCliente().setTipoIdentificacion(cliente.getPersonaNatural().getTipoIdentificacion().toString());
 			creditoDto.getCliente().setNroIdentificacion(cliente.getPersonaNatural().getNroIdentificacion());
 			creditoDto.setSaldoCapital(getSaldoCapital(credito));
+			creditoDto.setAnalista(credito.getAnalista().getUsuario()); // mapper is not working for this field
+			creditoDto.setPromotor(credito.getPromotor().getUsuario()); // mapper is not working for this field
 		}
 		return creditoDto;
 	}
@@ -160,6 +162,8 @@ public class CreditoServiceImpl implements CreditoService {
 		credito.setNroCondicion(creditoDto.getNroCondicion());
 		credito.setNroCuotas(creditoDto.getNroCuotas());
 		credito.setUsuarioResponsable(new Usuario(creditoDto.getUsuarioResponsable()));
+		credito.setAnalista(new Usuario(creditoDto.getAnalista()));
+		credito.setPromotor(new Usuario(creditoDto.getPromotor()));
 		credito.setTem(creditoDto.getTem());
 		credito.setUsuarioAprobador(new Usuario(creditoDto.getUsuarioAprobador()));
 		

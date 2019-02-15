@@ -31,6 +31,10 @@ public class CreditoDto implements Serializable {
 	
 	private String usuarioResponsable;
 	
+	private String analista;
+	
+	private String promotor;
+		
 	private Cliente cliente; 
 	
 	private BigDecimal saldoCapital;
@@ -119,6 +123,8 @@ public class CreditoDto implements Serializable {
 		this.fechaPrimeraCuota = desembolsoCredito.getCredito().getFechaPrimeraCuota();
 		this.usuarioAprobador = desembolsoCredito.getCredito().getUsuarioAprobador();
 		this.usuarioResponsable = desembolsoCredito.getCredito().getUsuarioResponsable();
+		this.analista = desembolsoCredito.getCredito().getAnalista();
+		this.promotor = desembolsoCredito.getCredito().getPromotor();
 		this.cliente = new Cliente(desembolsoCredito.getCliente().getId());
 	}
 
@@ -209,6 +215,22 @@ public class CreditoDto implements Serializable {
 	public void setUsuarioResponsable(String usuarioResponsable) {
 		this.usuarioResponsable = usuarioResponsable;
 	}
+	
+	public String getAnalista() {
+		return analista;
+	}
+
+	public void setAnalista(String analista) {
+		this.analista = analista;
+	}
+
+	public String getPromotor() {
+		return promotor;
+	}
+
+	public void setPromotor(String promotor) {
+		this.promotor = promotor;
+	}
 
 	public Cliente getCliente() {
 		return cliente;
@@ -233,7 +255,8 @@ public class CreditoDto implements Serializable {
 				+ ", frecuencia=" + frecuencia + ", tem=" + tem + ", nroCuotas=" + nroCuotas + ", fechaDesembolso="
 				+ fechaDesembolso + ", fechaPrimeraCuota=" + fechaPrimeraCuota + ", usuarioAprobador="
 				+ usuarioAprobador + ", nroCondicion=" + nroCondicion + ", usuarioResponsable=" + usuarioResponsable
-				+ ", cliente=" + cliente + ", saldoCapital=" + saldoCapital + "]";
+				+ ", analista=" + analista + ", promotor=" + promotor + ", cliente=" + cliente + ", saldoCapital="
+				+ saldoCapital + "]";
 	}
 
 }

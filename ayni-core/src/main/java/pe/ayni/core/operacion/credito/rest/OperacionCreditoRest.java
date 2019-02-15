@@ -36,7 +36,7 @@ public class OperacionCreditoRest {
 	@CrossOrigin
 	@PostMapping("/desembolsos")
 	public DesembolsoCreditoDto createDesembolso(@RequestBody DesembolsoCreditoDto desembolsoCredito, Principal principal) {
-		desembolsoCredito.getOperacion().setUsuario(principal.getName().toUpperCase()); 
+		desembolsoCredito.getOperacion().setUsuario(principal.getName().toUpperCase());
 		
 		DesembolsoCreditoDto desemsolsoResponse = operacionCreditoService.createDesembolso(desembolsoCredito);
 		return desemsolsoResponse;

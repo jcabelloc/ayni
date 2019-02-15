@@ -202,6 +202,10 @@ public class DesembolsoCreditoDto implements Serializable {
 		
 		private String usuarioResponsable;
 		
+		private String analista;
+		
+		private String promotor;
+		
 		public Credito() {
 			
 		}
@@ -217,6 +221,9 @@ public class DesembolsoCreditoDto implements Serializable {
 			this.fechaPrimeraCuota = credito.getFechaPrimeraCuota();
 			this.usuarioAprobador = credito.getUsuarioAprobador();
 			this.usuarioResponsable = credito.getUsuarioResponsable();
+			this.analista = credito.getAnalista();
+			this.promotor = credito.getPromotor();
+			
 		}
 
 		public Integer getIdCuenta() {
@@ -298,15 +305,32 @@ public class DesembolsoCreditoDto implements Serializable {
 		public void setUsuarioResponsable(String usuarioResponsable) {
 			this.usuarioResponsable = usuarioResponsable;
 		}
+		
+		public String getAnalista() {
+			return analista;
+		}
+
+		public void setAnalista(String analista) {
+			this.analista = analista;
+		}
+
+		public String getPromotor() {
+			return promotor;
+		}
+
+		public void setPromotor(String promotor) {
+			this.promotor = promotor;
+		}
 
 		@Override
 		public String toString() {
 			return "Credito [idCuenta=" + idCuenta + ", montoDesembolso=" + montoDesembolso + ", moneda=" + moneda
 					+ ", frecuencia=" + frecuencia + ", tem=" + tem + ", nroCuotas=" + nroCuotas + ", fechaDesembolso="
 					+ fechaDesembolso + ", fechaPrimeraCuota=" + fechaPrimeraCuota + ", usuarioAprobador="
-					+ usuarioAprobador + ", usuarioResponsable=" + usuarioResponsable + "]";
+					+ usuarioAprobador + ", usuarioResponsable=" + usuarioResponsable + ", analista=" + analista
+					+ ", promotor=" + promotor + "]";
 		}
-		
+
 	}
 	
 	public class Cliente {
